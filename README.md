@@ -1,4 +1,4 @@
-# One (web)
+# ONE (one)
 
 A Quasar Project
 
