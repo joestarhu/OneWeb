@@ -26,5 +26,19 @@ export default route(function (/* { store, ssrContext } */) {
     history: createHistory(process.env.VUE_ROUTER_BASE)
   })
 
+  Router.beforeEach((to, from, next) => {
+    // 用户登录信息
+    let loginInfo = null
+
+    // 如果无用户登录信息
+    if (loginInfo == null) {
+      to.path === '/login' ? next() : next('/login')
+    } else {
+      to.path === '/login' ? next('/') : next()
+    }
+  })
+
+
+
   return Router
 })

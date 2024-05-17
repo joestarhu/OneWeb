@@ -2,6 +2,35 @@
 // so you can safely delete all default props below
 
 export default {
-  failed: 'Action failed',
-  success: 'Action was successful'
+
+  // A
+  msgAccount: "Account",
+  // B
+  // C
+  // D
+  // E
+  // F
+  // G
+  // H
+  // I
+  // J
+  // K
+  // L
+  msgLogin: "Login",
+  // M
+  // N
+  // O
+  // P
+  msgPassword: "Password",
+  // Q
+  // R
+  msgRequiredField: "Required Field",
+  // S
+  // T
+  // U
+  // V
+  // W
+  // X
+  // Y
+  // Z
 }
