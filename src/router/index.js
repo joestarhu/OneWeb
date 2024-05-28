@@ -1,6 +1,7 @@
 import { route } from 'quasar/wrappers'
 import { createRouter, createMemoryHistory, createWebHistory, createWebHashHistory } from 'vue-router'
 import routes from './routes'
+import { getLoginInfo } from 'src/boot/security'
 
 /*
  * If not building with SSR mode, you can
@@ -28,7 +29,7 @@ export default route(function (/* { store, ssrContext } */) {
 
   Router.beforeEach((to, from, next) => {
     // 用户登录信息
-    let loginInfo = null
+    let loginInfo = getLoginInfo()
 
     // 如果无用户登录信息
     if (loginInfo == null) {

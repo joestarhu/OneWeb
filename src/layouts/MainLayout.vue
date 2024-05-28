@@ -1,41 +1,41 @@
 <template>
-  <q-layout view="lHh Lpr lFf">
-    <q-header elevated>
+  <q-layout view="hHh Lpr lFf">
+    <q-header class="bg-white text-grey-9" bordered> 
       <q-toolbar>
-        <q-btn
-          flat
-          dense
-          round
-          icon="menu"
-          aria-label="Menu"
-          @click="toggleLeftDrawer"
-        />
+        <img src="/icons/favicon-32x32.png" />
+        <q-toolbar-title>ONE</q-toolbar-title>
+        <q-space />
+          <div class="q-gutter-sm row-inline">
+          <dmLanguage />
+          <q-avatar class="dm-avatar">
+            <img :src=userInfo.avatar />
+            <q-popup-proxy>
+              <q-list dense>
+                <q-item clickable>
+                  <q-item-section>
+                    <span>{{ userInfo.nick_name }}</span>
+                  </q-item-section>
+                </q-item>
+                <q-separator />
 
-        <q-toolbar-title>
-          Quasar App
-        </q-toolbar-title>
-
-        <div>Quasar v{{ $q.version }}</div>
+                <q-item clickable v-close-popup @click="logout">
+                  <q-item-section>
+                    <q-item-label>{{ $t("msgLogout") }}</q-item-label>
+                  </q-item-section>
+                </q-item>
+              </q-list>
+            </q-popup-proxy>
+          </q-avatar>
+        </div>
       </q-toolbar>
     </q-header>
 
     <q-drawer
       v-model="leftDrawerOpen"
       show-if-above
-      bordered
-    >
-      <q-list>
-        <q-item-label
-          header
-        >
-          Essential Links
-        </q-item-label>
-
-        <EssentialLink
-          v-for="link in essentialLinks"
-          :key="link.title"
-          v-bind="link"
-        />
+      bordered>
+      <q-list class="q-ma-md">
+        <dmMenu v-for="link in menuList" :key="link.title" v-bind="link"></dmMenu>
       </q-list>
     </q-drawer>
 
@@ -45,72 +45,54 @@
   </q-layout>
 </template>
 
-<script>
-import { defineComponent, ref } from 'vue'
-import EssentialLink from 'components/EssentialLink.vue'
+<script setup>
+import { useQuasar } from "quasar"
+import { useRouter } from "vue-router"
+import {ref,onMounted} from "vue"
+import { DMOBJ } from "src/boot/dm"
+import dmMenu from "components/dmMenu.vue"
+import dmLanguage from "components/dmLanguage.vue"
 
-const linksList = [
-  {
-    title: 'Docs',
-    caption: 'quasar.dev',
-    icon: 'school',
-    link: 'https://quasar.dev'
-  },
-  {
-    title: 'Github',
-    caption: 'github.com/quasarframework',
-    icon: 'code',
-    link: 'https://github.com/quasarframework'
-  },
-  {
-    title: 'Discord Chat Channel',
-    caption: 'chat.quasar.dev',
-    icon: 'chat',
-    link: 'https://chat.quasar.dev'
-  },
-  {
-    title: 'Forum',
-    caption: 'forum.quasar.dev',
-    icon: 'record_voice_over',
-    link: 'https://forum.quasar.dev'
-  },
-  {
-    title: 'Twitter',
-    caption: '@quasarframework',
-    icon: 'rss_feed',
-    link: 'https://twitter.quasar.dev'
-  },
-  {
-    title: 'Facebook',
-    caption: '@QuasarFramework',
-    icon: 'public',
-    link: 'https://facebook.quasar.dev'
-  },
-  {
-    title: 'Quasar Awesome',
-    caption: 'Community Quasar projects',
-    icon: 'favorite',
-    link: 'https://awesome.quasar.dev'
-  }
-]
+const dm = new DMOBJ(useQuasar(),useRouter())
 
-export default defineComponent({
-  name: 'MainLayout',
 
-  components: {
-    EssentialLink
-  },
-
-  setup () {
-    const leftDrawerOpen = ref(false)
-
-    return {
-      essentialLinks: linksList,
-      leftDrawerOpen,
-      toggleLeftDrawer () {
-        leftDrawerOpen.value = !leftDrawerOpen.value
-      }
-    }
-  }
+const leftDrawerOpen = ref(false)
+const userInfo = ref({
+  nick_name: "Nick Name",
+  avatar: "https://demos.pixinvent.com/materialize-vuejs-admin-template/demo-2/images/avatars/avatar-1.png",
+  user_orgs: {},
+  login_org_name: "",
+  owner_flag:false,
+  admin_org:false,
 })
+
+
+
+const menuList = ref({
+  cbam:{title:"",children:[
+    {title:"Reporting Data",to:"/cbamdata"},
+    // {title:"msgLogin",to:"/123"},
+    // {title:"msgLogin",to:"/x"},
+  ]},
+})
+
+
+function logout(){
+  dm.logout()
+}
+
+
+onMounted(()=>{
+
+})
+
+
 </script>
+
+<style>
+.dm-avatar {
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+}
+</style>

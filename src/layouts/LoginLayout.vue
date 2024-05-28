@@ -2,10 +2,14 @@
 <q-layout>
     <q-page-container>
         <q-page class="one-bg flex flex-center">
+            <dmLanguage class="one-language"></dmLanguage>
             <q-card class="one-login-form text-center q-pa-md">
                 <q-card-section>
-                    <div class="text-h6">用户登录</div>
+                    <div class="text-h6 text-bold">WELCOME</div>
                 </q-card-section>
+
+
+                <q-form class="q-pb-md" @submit="passwordLogin" >
                 <q-card-section class="row-inline col">
                     <q-input v-bind="viewLogin.account" v-model="viewLogin.account.value">
                         <template #label>{{ t(viewLogin.account.label) }}</template>
@@ -27,11 +31,8 @@
                             {{ t("msgLogin") }}
                     </q-btn>
                 </q-card-actions>
+                </q-form>
             </q-card>
-
-
-
-            <dmLanguage />
         </q-page>
     </q-page-container>
 </q-layout>
@@ -39,14 +40,16 @@
 
 
 <script setup>
-import { useI18n } from "vue-i18n";
-import { useQuasar } from "quasar";
-import { useRouter } from "vue-router";
-import { ref,onMounted,watch,onBeforeMount} from "vue";
-import { encryptString } from "src/boot/security";
-import dmLanguage from "src/components/dmLanguage.vue";
+import { useI18n } from "vue-i18n"
+import { useQuasar } from "quasar"
+import { useRouter } from "vue-router"
+import { ref,onMounted,watch,onBeforeMount} from "vue"
+import { DMOBJ, DMSETTINGS } from "src/boot/dm"
+import { encryptString } from "src/boot/security"
+import dmLanguage from "src/components/dmLanguage.vue"
 
-const { t } = useI18n();
+const { t } = useI18n()
+const dm = new DMOBJ(useQuasar(),useRouter())
 
 const viewLogin = ref({
     account:{label:"msgAccount",rules: [val => val && val.length > 0 || t("msgRequiredField")],value:""},
@@ -55,29 +58,35 @@ const viewLogin = ref({
 })
 
 
+function loginSuccess(rsp){
+    localStorage.setItem(DMSETTINGS.jwt,rsp.data)
+    dm.router.push("/")
+}
+
 
 function passwordLogin(){
     // 密码登录
     let viewLoginRef = viewLogin.value;
     let passwd_enc = encryptString(viewLoginRef.passwd.value);
-    let url = "/auth/passowrd";
-    let reqData = {
+    let url = "/auth/password";
+    let postData = {
         account:viewLoginRef.account.value,
-        password:passwd_enc
+        password_enc:passwd_enc
     }
 
-    // dm.post(url,reqData,viewLoginRef.login,)
-    // dm.post(url,postData,viewLoginRef.btnLogin,loginSuccess)
+    dm.post(url,postData,viewLoginRef.login,loginSuccess)
 }
-
-
-
-
 </script>
 
 <style>
 .one-bg{
     background-image:linear-gradient(135deg,#a8edea 0%, #fed6e3 100%);
+}
+
+.one-language{
+    position:absolute;
+    top:1rem;
+    right:5rem;
 }
 
 .one-login-form{
@@ -86,6 +95,12 @@ function passwordLogin(){
     border-radius: 10px;
     width: 330px;
     height: 420px;
+}
+
+.one-lang-icon{
+    position: absolute;
+    top:30;
+    right:20;
 }
 
 </style>
