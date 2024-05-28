@@ -5,10 +5,16 @@ export default {
 
   // A
   msgAccount: "Account",
+  msgAction: "Action",
   // B
   // C
+  msgCancel: "Cancel",
+  msgCreate: "Create",
+  msgConfirm: "Confirm",
   // D
+  msgDelete: "Delete",
   // E
+  msgEdit: "Edit",
   // F
   // G
   // H
@@ -17,8 +23,10 @@ export default {
   // K
   // L
   msgLogin: "Login",
+  msgLogout: "Logout",
   // M
   // N
+  msgNoData: "No Data",
   // O
   // P
   msgPassword: "Password",
