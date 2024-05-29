@@ -1,5 +1,5 @@
 <template>
-    <q-item-label header class="text-weight-bold text-uppercase" v-show="title">
+    <q-item-label header class="text-weight-bold text-uppercase" v-if="title">
         {{ $t(title) }}
     </q-item-label>
 

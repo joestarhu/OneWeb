@@ -12,6 +12,18 @@
             </div>
         </template>
 
+        <!-- header的中英文处理 -->
+        <template #header="props">
+            <q-tr :props="props">
+              <q-th
+                v-for="col in props.cols"
+                :key="col.name"
+                :props="props">
+            {{ $t(col.label) }}
+          </q-th>
+        </q-tr>
+      </template>
+
         <!-- 读取状态 -->
         <template v-slot:loading>
             <q-inner-loading showing color="primary">

@@ -1,19 +1,11 @@
 <template>
     <!-- 普通输入框:text -->
-    <q-input v-if="dmType == 'text'" v-bind="qProps" v-model.trim="innerValue">
-        <template #label>
-            {{ t("qProps.label") }}
-        </template>
-    </q-input>
-
-    <!-- 普通输入框(必填):text_required -->
-    <q-input v-if="dmType == 'text_required'" v-bind="qProps" v-model.trim="innerValue">
-        <template #append>
+    <q-input v-if="dmType == 'text'" v-bind="qProps" v-model.trim="innerValue" :label="$t(qProps.label)">
+        <template #append v-if="dmRequired">
             <q-icon size="0.5em" name="tag" />
-            <span style="font-size: 0.5em">{{$t('msgRequiredField')}}</span>
+            <span style="font-size: 0.5em">{{$t('msgRequired')}}</span>
         </template>
     </q-input>
-
 
     <!-- 普通选择框:select -->
     <q-select v-if="dmType == 'select'" v-bind="qProps" v-model.trim="innerValue" emit-value map-options>
@@ -35,8 +27,8 @@
     </q-select>
 
     <!-- 查询输入框:query -->
-    <q-input v-if="dmType == 'query'" :clearable="true" v-bind="qProps" v-model.trim="innerValue" >
-        <template #append>
+    <q-input v-if="dmType == 'query'" :clearable="true" v-bind="qProps" v-model.trim="innerValue" :label="$t(qProps.label)" >
+        <template #prepend>
             <q-icon size="0.5em" name="search" />
         </template>
     </q-input>
@@ -62,6 +54,10 @@ export default defineComponent({
         dmType:{
             type:String,
             default:"text",
+        },
+        dmRequired:{
+            type:Boolean,
+            default:false,
         },
     },
     setup(props,ctx){
