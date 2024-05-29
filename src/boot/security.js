@@ -20,8 +20,6 @@ function getLoginInfo() {
     if (jwt == null) {
         return jwt
     }
-
-
     let payload = JSON.parse(Base64.decode(jwt.split('.')[1]))
     return payload
 }

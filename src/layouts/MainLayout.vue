@@ -49,12 +49,12 @@
 import { useQuasar } from "quasar"
 import { useRouter } from "vue-router"
 import {ref,onMounted} from "vue"
+import { getLoginInfo } from "src/boot/security"
 import { DMOBJ } from "src/boot/dm"
 import dmMenu from "components/dmMenu.vue"
 import dmLanguage from "components/dmLanguage.vue"
 
 const dm = new DMOBJ(useQuasar(),useRouter())
-
 
 const leftDrawerOpen = ref(false)
 const userInfo = ref({
@@ -66,24 +66,29 @@ const userInfo = ref({
   admin_org:false,
 })
 
-
-
 const menuList = ref({
-  cbam:{title:"",children:[
-    {title:"Reporting Data",to:"/cbamdata"},
-    // {title:"msgLogin",to:"/123"},
-    // {title:"msgLogin",to:"/x"},
-  ]},
+  one:{
+    title:"平台管理",children:[
+      {title:"账户管理",to:"account",icon:"o_person"},
+    ]
+  },
 })
-
 
 function logout(){
   dm.logout()
 }
 
+function initData(){
+  let loginInfo = getLoginInfo()
+  if(loginInfo != null){
+    let userInfoValue = userInfo.value
+    userInfoValue.nick_name = loginInfo["user"]["nick_name"]
+  }
+}
+
 
 onMounted(()=>{
-
+  initData()
 })
 
 
