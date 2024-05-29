@@ -5,6 +5,7 @@ const routes = [
     component: () => import('layouts/MainLayout.vue'),
     children: [
       { path: '', component: () => import('pages/IndexPage.vue') },
+      { path: '/account', component: () => import('pages/usercenter/AccountList.vue') },
       { path: '/cbamdata', component: () => import('pages/CBAM/CbamData.vue') },
     ]
   },

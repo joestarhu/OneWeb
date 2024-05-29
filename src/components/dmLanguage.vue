@@ -15,7 +15,7 @@
 <script>
 import { useI18n } from "vue-i18n";
 import { defineComponent} from "vue";
-import { DMSETTINGS} from "src/boot/dm";
+import { DMSETTINGS} from "src/base/dm";
 
 export default defineComponent({
     name:"dmLanguage",

@@ -1,5 +1,5 @@
 import { ref } from 'vue';
-import { api } from './axios'
+import { api } from '../boot/axios'
 
 
 // 全局的宏定义

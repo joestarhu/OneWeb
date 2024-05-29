@@ -1,6 +1,6 @@
 import { boot } from 'quasar/wrappers'
 import { createI18n } from 'vue-i18n'
-import { DMSETTINGS } from "src/boot/dm";
+import { DMSETTINGS } from "src/base/dm";
 import messages from 'src/i18n'
 
 

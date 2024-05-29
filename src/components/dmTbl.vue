@@ -44,7 +44,7 @@
 
 <script>
 import { defineComponent,ref,onMounted} from "vue"
-import { DMSETTINGS} from "src/boot/dm"
+import { DMSETTINGS} from "src/base/dm"
 import dmInput from "src/components/dmInput.vue"
 
 export default defineComponent({

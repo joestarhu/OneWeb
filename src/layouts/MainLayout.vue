@@ -49,8 +49,8 @@
 import { useQuasar } from "quasar"
 import { useRouter } from "vue-router"
 import {ref,onMounted} from "vue"
-import { getLoginInfo } from "src/boot/security"
-import { DMOBJ } from "src/boot/dm"
+import { getLoginInfo } from "src/base/security"
+import { DMOBJ } from "src/base/dm"
 import dmMenu from "components/dmMenu.vue"
 import dmLanguage from "components/dmLanguage.vue"
 
