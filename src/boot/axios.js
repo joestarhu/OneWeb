@@ -1,4 +1,5 @@
 import { boot } from 'quasar/wrappers'
+import { DMSETTINGS } from 'src/base/dm'
 import axios from 'axios'
 
 // Be careful when using SSR for cross-request state pollution
@@ -12,6 +13,16 @@ const api = axios.create({
   timeout: 10000,
 })
 
+// 请求拦截器,自动带上header信息
+api.interceptors.request.use(
+  config => {
+    config.headers.Authorization = 'Bearer ' + localStorage.getItem(DMSETTINGS.jwt)
+    return config;
+  },
+  err => {
+    return Promise.reject(err);
+  }
+)
 
 
 export default boot(({ app }) => {
