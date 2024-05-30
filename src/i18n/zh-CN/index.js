@@ -27,6 +27,9 @@ export default {
     msgLogin: "登录",
     msgLogout: "退出登录",
     // M
+    msgModeAuto: "自动",
+    msgModeLight: "浅色",
+    msgModeDark: "深色",
     // N
     msgNickName: "昵称",
     msgNoData: "无数据",
@@ -54,8 +57,8 @@ export default {
     // 统一用户中心 | ONE
     msgMenuAccount: "账号",
 
-
-
-
+    msgPnlAccountCreate: "新增账户",
+    msgPnlAccountEdit: "编辑账户",
+    msgPnlAccountDelete: "删除账户",
 
 }

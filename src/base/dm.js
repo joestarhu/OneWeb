@@ -7,6 +7,7 @@ const DMSETTINGS = {
     locale: "user-locale",
     jwt: "jwt",
     pageSize: "pageSize",
+    appearance: "appearance",
 
     // dmInput
     dmInputAppendRequired: 0,

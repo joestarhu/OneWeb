@@ -1,12 +1,13 @@
 <template>
   <q-layout view="hHh Lpr lFf">
-    <q-header class="bg-white text-grey-9" bordered> 
+      <q-header :class="Dark.isActive?'bg-dark text-white':'bg-white text-grey-9'" bordered> 
       <q-toolbar>
         <img src="/icons/favicon-32x32.png" />
         <q-toolbar-title>ONE</q-toolbar-title>
         <q-space />
           <div class="q-gutter-sm row-inline">
-          <dmLanguage />
+            <dmAppearance/>
+            <dmLanguage />
           <q-avatar class="dm-avatar">
             <img :src=userInfo.avatar />
             <q-popup-proxy>
@@ -46,17 +47,19 @@
 </template>
 
 <script setup>
-import { useQuasar } from "quasar"
+import { useQuasar,Dark } from "quasar"
 import { useRouter } from "vue-router"
 import {ref,onMounted} from "vue"
 import { getLoginInfo } from "src/base/security"
-import { DMOBJ } from "src/base/dm"
+import { DMOBJ, DMSETTINGS } from "src/base/dm"
 import dmMenu from "components/dmMenu.vue"
 import dmLanguage from "components/dmLanguage.vue"
+import dmAppearance from "components/dmAppearance.vue"
 
 const dm = new DMOBJ(useQuasar(),useRouter())
 
 const leftDrawerOpen = ref(false)
+
 const userInfo = ref({
   nick_name: "Nick Name",
   avatar: "https://demos.pixinvent.com/materialize-vuejs-admin-template/demo-2/images/avatars/avatar-1.png",
@@ -79,6 +82,7 @@ function logout(){
 }
 
 function initData(){
+  // 用户信息加载
   let loginInfo = getLoginInfo()
   if(loginInfo != null){
     let userInfoValue = userInfo.value
