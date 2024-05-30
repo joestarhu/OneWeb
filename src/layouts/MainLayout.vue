@@ -68,8 +68,8 @@ const userInfo = ref({
 
 const menuList = ref({
   one:{
-    title:"平台管理",children:[
-      {title:"账户管理",to:"account",icon:"o_person"},
+    title:"",children:[
+      {title:"msgMenuAccount",to:"/account",icon:"o_person"},
     ]
   },
 })

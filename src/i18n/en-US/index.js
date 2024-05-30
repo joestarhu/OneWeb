@@ -10,6 +10,8 @@ export default {
   // C
   msgCancel: "Cancel",
   msgCreate: "Create",
+  msgCreateName: "Created by",
+  msgCreateDt: "Create time",
   msgConfirm: "Confirm",
   // D
   msgDelete: "Delete",
@@ -26,19 +28,28 @@ export default {
   msgLogout: "Logout",
   // M
   // N
+  msgNickName: "Nickname",
   msgNoData: "No Data",
   // O
   // P
   msgPassword: "Password",
+  msgPhone: "Phone",
   // Q
   // R
+  msgRequired: "Required",
   msgRequiredField: "Required Field",
   // S
+  msgStatus: "Status",
   // T
   // U
+  msgUpdateName: "Updated by",
+  msgUpdateDt: "Update time",
   // V
   // W
   // X
   // Y
   // Z
+
+  // 统一用户中心 | ONE
+  msgMenuAccount: "Account",
 }

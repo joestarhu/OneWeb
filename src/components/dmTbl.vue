@@ -3,7 +3,7 @@
         v-model:pagination="pagination" @request="onRequest" class="q-pa-md" >
         <template v-slot:top>
             <div class="col row q-col-gutter-xs">
-                <dmInput v-for="obj in dmQueryInput" :key="obj" :qProps="obj.qProps" :dmType="obj.dmType"
+                <dmInput v-for="obj in dmQueryInput" :key="obj" :qProps="obj.qProps" :dmType="obj.dmType" :dmAppend="obj.dmAppend"
                     v-model="obj.value" @update:model-value="onRequest(null)" />
             </div>
             <div class="col-inline reverse q-gutter-xs">

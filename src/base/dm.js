@@ -7,6 +7,10 @@ const DMSETTINGS = {
     locale: "user-locale",
     jwt: "jwt",
     pageSize: "pageSize",
+
+    // dmInput
+    dmInputAppendRequired: 0,
+    dmInputAppendQuery: 1,
 }
 
 
@@ -131,38 +135,45 @@ const DMINPUT = {
     // 必填普通输入
     text_required: (qProps, value = null) => {
         let params = { filled: true, "lazy-rules": true, hint: "", dense: false, ...qProps }
-        return ref({ dmType: "text_required", qProps: params, value: value })
+        return ref({ dmType: "text", dmAppend: DMSETTINGS.dmInputAppendRequired, qProps: params, value: value })
     },
+    // 查询输入
+    test_query: (qProps, value = null) => {
+        let params = { filled: false, debounce: 500, dense: true, clearable: true, style: "width:265px;", outlined: true, ...qProps }
+        // let params = { standout: "bg-secondary text-white", debounce: 500, dense: true, clearable: true, style: "width:265px;", ...qProps }
+        return ref({ dmType: "text", dmAppend: DMSETTINGS.dmInputAppendQuery, qProps: params, value: value })
+    },
+
     // 选择输入
     select: (qProps, value = null) => {
         let params = { filled: true, "lazy-rules": true, hint: '', dense: false, ...qProps }
         return ref({ dmType: "select", qProps: params, value: value })
     },
-
-    // 查询输入
-    query: (qProps, value = null) => {
-        let params = { filled: false, debounce: 500, dense: true, clearable: true, style: "width:265px;", outlined: true, ...qProps }
-        return ref({ dmType: "query", qProps: params, value: value })
-    },
-    query_select: (qProps, value = null) => {
+    select_query: (qProps, value = null) => {
         let params = { filled: false, debounce: 500, dense: true, clearable: true, style: "width:265px;", outlined: true, ...qProps }
         return ref({ dmType: "select", qProps: params, value: value })
     },
-
 }
-
 
 
 const DMBTN = {
-    delete: { id: 0, label: 'msgDelete', color: 'primary', icon: 'o_delete' },
-    create: { id: 1, label: 'msgCreate', color: 'primary' },
-    edit: { id: 2, label: 'msgEdit', color: 'primary', icon: 'o_edit' },
-    confrim: { id: 3, label: 'msgConfirm', color: 'primary' },
+    delete: { id: 0, label: "msgDelete", color: "primary", icon: "o_delete" },
+    create: { id: 1, label: "msgCreate", color: "primary" },
+    edit: { id: 2, label: "msgEdit", color: "primary", icon: "o_edit" },
+    confirm: { id: 3, label: "msgConfirm", color: "primary" },
 }
 
 
+function showOptLabel(value, opts) {
+    for (let obj of opts) {
+        if (obj.value === value) {
+            return obj.label
+        }
+    }
+    return ""
+}
 
-function setTblCol(field, label, options = null, name = '', align = 'left') {
+function setTblCol(field, label, options = null, name = "", align = "left") {
     let format = val => { return val }
     if (!name) {
         name = field
@@ -178,8 +189,8 @@ function setTblCol(field, label, options = null, name = '', align = 'left') {
 
 const DMTBL = {
     col: setTblCol,
-    btn: (label = 'Action', field = 'id', align = 'right') => {
-        return setTblCol(field, label, null, 'btns', align)
+    btn: (field = "id", label = "msgAction", align = "right") => {
+        return setTblCol(field, label, null, "btns", align)
     },
 }
 

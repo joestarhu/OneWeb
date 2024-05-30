@@ -1,14 +1,20 @@
 <template>
     <!-- 普通输入框:text -->
     <q-input v-if="dmType == 'text'" v-bind="qProps" v-model.trim="innerValue" :label="$t(qProps.label)">
-        <template #append v-if="dmRequired">
-            <q-icon size="0.5em" name="tag" />
-            <span style="font-size: 0.5em">{{$t('msgRequired')}}</span>
+        <template #append v-if="dmAppend==DMSETTINGS.dmInputAppendRequired">
+                <q-icon size="0.5em" name="tag" />
+                <span style="font-size: 0.5em">{{$t('msgRequired')}}</span>
+        </template>
+        <template #append v-else-if="dmAppend==DMSETTINGS.dmInputAppendQuery">
+            <q-icon size="0.5em" name="search" />
+        </template>
+        <template #append v-else>
+            <!-- nothings -->
         </template>
     </q-input>
 
     <!-- 普通选择框:select -->
-    <q-select v-if="dmType == 'select'" v-bind="qProps" v-model.trim="innerValue" emit-value map-options>
+    <q-select v-if="dmType == 'select'" v-bind="qProps" v-model.trim="innerValue" :label="$t(qProps.label)" emit-value map-options>
         <template #no-option>
             <q-item>
                 <q-item-section class="text-grey">
@@ -25,21 +31,11 @@
             </q-item>
         </template>
     </q-select>
-
-    <!-- 查询输入框:query -->
-    <q-input v-if="dmType == 'query'" :clearable="true" v-bind="qProps" v-model.trim="innerValue" :label="$t(qProps.label)" >
-        <template #prepend>
-            <q-icon size="0.5em" name="search" />
-        </template>
-    </q-input>
-
-
-
-
 </template>
 
 <script>
 import { defineComponent,ref,watch,watchEffect} from 'vue';
+import { DMSETTINGS } from 'src/base/dm'
 
 export default defineComponent({
     name:"dmInput",
@@ -55,9 +51,9 @@ export default defineComponent({
             type:String,
             default:"text",
         },
-        dmRequired:{
-            type:Boolean,
-            default:false,
+        dmAppend:{
+            type:Number,
+            default:null,
         },
     },
     setup(props,ctx){
@@ -76,6 +72,7 @@ export default defineComponent({
         });
 
         return{
+            DMSETTINGS,
             innerValue,
             filterFn(val, update, abort){
                 ctx.emit("filter", val, update, abort);

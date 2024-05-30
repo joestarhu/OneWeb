@@ -10,6 +10,8 @@ export default {
     // C
     msgCancel: "取消",
     msgCreate: "新增",
+    msgCreateName: "创建人",
+    msgCreateDt: "创建时间",
     msgConfirm: "确认",
     // D
     msgDelete: "删除",
@@ -26,19 +28,34 @@ export default {
     msgLogout: "退出登录",
     // M
     // N
+    msgNickName: "昵称",
     msgNoData: "无数据",
     // O
     // P
     msgPassword: "密码",
+    msgPhone: "手机号",
     // Q
     // R
+    msgRequired: "必需",
     msgRequiredField: "必填字段",
     // S
+    msgStatus: "状态",
     // T
     // U
+    msgUpdateName: "更新人",
+    msgUpdateDt: "更新时间",
     // V
     // W
     // X
     // Y
     // Z
+
+
+    // 统一用户中心 | ONE
+    msgMenuAccount: "账号",
+
+
+
+
+
 }
