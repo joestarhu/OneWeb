@@ -14,7 +14,7 @@
                         </div>
                     </div>
                     <div v-else>
-                        {{ actPnl.data.account }}
+                         {{t("msgAccount")}}:<span class="text-negative">{{  actPnl.data.account }}</span> {{ t("msgDeleteWarning") }}
                     </div>
                     <template #right_btn v-if="actPnl.loading">
                         <q-skeleton type="QBtn"></q-skeleton>
@@ -148,6 +148,9 @@ function btnClick(btnID, props = null){
                     }
                     break
                 case actRes.delete.title:
+                    data = {
+                        user_id:pnl.data.id
+                    }
                     break
                 default:
                     break

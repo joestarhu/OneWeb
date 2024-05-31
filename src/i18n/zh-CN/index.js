@@ -15,10 +15,11 @@ export default {
     msgConfirm: "确认",
     // D
     msgDelete: "删除",
+    msgDeleteWarning: "将被删除,数据删除后将无法恢复.请确认",
     // E
     msgEdit: "编辑",
     // F
-    // G
+    // G,
     // H
     // I
     // J
@@ -32,6 +33,7 @@ export default {
     msgModeDark: "深色",
     // N
     msgNickName: "昵称",
+    msgNo: "取消",
     msgNoData: "无数据",
     // O
     // P
@@ -52,11 +54,13 @@ export default {
     // W
     // X
     // Y
+    msgYes: "确认",
     // Z
 
 
     // 统一用户中心 | ONE
     msgMenuAccount: "账号",
+    msgMenuOrg: "组织",
 
     msgPnlAccountCreate: "新增账户",
     msgPnlAccountEdit: "编辑账户",

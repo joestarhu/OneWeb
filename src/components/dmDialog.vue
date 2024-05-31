@@ -20,8 +20,8 @@
                 <div class="col">
                 </div>
                 <div class="col row reverse q-gutter-sm">
-                    <q-btn color="primary" type="submit">{{ $t('msgConfirm') }}</q-btn>
-                    <q-btn v-close-popup>{{ $t('msgCancel') }}</q-btn>
+                    <q-btn color="primary" type="submit">{{ $t('msgYes') }}</q-btn>
+                    <q-btn v-close-popup>{{ $t('msgNo') }}</q-btn>
                 </div>
             </q-card-section>
         </q-form>

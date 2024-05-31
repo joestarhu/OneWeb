@@ -13,8 +13,10 @@ export default {
   msgCreateName: "Created by",
   msgCreateDt: "Create time",
   msgConfirm: "Confirm",
+
   // D
   msgDelete: "Delete",
+  msgDeleteWarning: "will be deleted,once deleted there is no going back.Please be certain",
   // E
   msgEdit: "Edit",
   // F
@@ -32,6 +34,7 @@ export default {
   msgModeDark: "Dark",
   // N
   msgNickName: "Nickname",
+  msgNo: "No",
   msgNoData: "No Data",
   // O
   // P
@@ -52,10 +55,12 @@ export default {
   // W
   // X
   // Y
+  msgYes: "Yes",
   // Z
 
   // 统一用户中心 | ONE
   msgMenuAccount: "Account",
+  msgMenuOrg: "Organization",
 
   msgPnlAccountCreate: "Create Account",
   msgPnlAccountEdit: "Edit Account",

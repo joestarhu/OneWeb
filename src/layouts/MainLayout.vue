@@ -21,7 +21,7 @@
 
                 <q-item clickable v-close-popup @click="logout">
                   <q-item-section>
-                    <q-item-label>{{ $t("msgLogout") }}</q-item-label>
+                    <q-item-label>{{ $t("msgLogout")}}</q-item-label>
                   </q-item-section>
                 </q-item>
               </q-list>
@@ -73,6 +73,7 @@ const menuList = ref({
   one:{
     title:"",children:[
       {title:"msgMenuAccount",to:"/account",icon:"o_person"},
+      {title:"msgMenuOrg",to:"/org",icon:"o_corporate_fare"},
     ]
   },
 })

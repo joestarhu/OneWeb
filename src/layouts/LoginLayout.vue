@@ -2,12 +2,14 @@
 <q-layout>
     <q-page-container>
         <q-page class="one-bg flex flex-center">
-            <dmLanguage class="one-language"></dmLanguage>
-            <q-card class="one-login-form text-center q-pa-md">
+            <div class="one-language">
+                <dmLanguage></dmLanguage>
+                <dmAppearance></dmAppearance>
+            </div>
+            <q-card :class="Dark.isActive?'one-login-form-dark text-white text-center q-pa-md':'one-login-form text-grey-9 text-center q-pa-md'" >
                 <q-card-section>
                     <div class="text-h6 text-bold">WELCOME</div>
                 </q-card-section>
-
 
                 <q-form class="q-pb-md" @submit="passwordLogin" >
                 <q-card-section class="row-inline col">
@@ -27,9 +29,7 @@
                         </q-input>
                 </q-card-section>
                 <q-card-actions vertical>
-                    <q-btn v-bind="viewLogin.login">
-                            {{ t("msgLogin") }}
-                    </q-btn>
+                    <q-btn v-bind="viewLogin.login">{{ t("msgLogin") }}</q-btn>
                 </q-card-actions>
                 </q-form>
             </q-card>
@@ -41,12 +41,13 @@
 
 <script setup>
 import { useI18n } from "vue-i18n"
-import { useQuasar } from "quasar"
+import { useQuasar,Dark } from "quasar"
 import { useRouter } from "vue-router"
 import { ref} from "vue"
 import { DMOBJ, DMSETTINGS } from "src/base/dm"
 import { encryptString } from "src/base/security"
 import dmLanguage from "src/components/dmLanguage.vue"
+import dmAppearance from "src/components/dmAppearance.vue"
 
 const { t } = useI18n()
 const dm = new DMOBJ(useQuasar(),useRouter())
@@ -91,7 +92,15 @@ function passwordLogin(){
 
 .one-login-form{
     /* background-color: rgba(255, 255, 255, 0.2); */
-    background-color: rgba(255, 255, 255, 0);
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    width: 330px;
+    height: 420px;
+}
+
+.one-login-form-dark{
+    /* background-color: rgba(255, 255, 255, 0.2); */
+    background-color: rgba(48, 51, 78, 1);
     border-radius: 10px;
     width: 330px;
     height: 420px;
