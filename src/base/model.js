@@ -1,4 +1,3 @@
-
 // 数据模型
 const dmSTYLE = {
     enable: "color:#25B25C;font-weight:800;",
@@ -12,7 +11,6 @@ const modelBase = {
     create_dt: { label: "msgCreateDt" },
     update_dt: { label: "msgUpdateDt" },
 }
-
 
 // 账户相关模型
 const modelUser = {

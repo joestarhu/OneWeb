@@ -5,10 +5,7 @@ import messages from 'src/i18n'
 
 
 export default boot(({ app }) => {
-  let user_locale = localStorage.getItem(DMSETTINGS.locale)
-  if (user_locale == null) {
-    user_locale = "zh-CN"
-  }
+  let user_locale = localStorage.getItem(DMSETTINGS.locale) || "zh-CN"
 
   const i18n = createI18n({
     locale: user_locale,

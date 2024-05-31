@@ -14,14 +14,10 @@ const DMSETTINGS = {
     dmInputAppendQuery: 1,
 }
 
-
-
 // 信息弹窗样式
 const MSG_BASE_OPTS = { timeout: 2000, position: "top", progress: true, classes: "glossy" };
 const MSG_OK_OPTS = { ...MSG_BASE_OPTS, type: "positive" };
 const MSG_NG_OPTS = { ...MSG_BASE_OPTS, type: "negative" };
-
-
 
 class DMOBJ {
     constructor(quasarObj, routerObj) {

@@ -43,7 +43,7 @@
 import { useI18n } from "vue-i18n"
 import { useQuasar } from "quasar"
 import { useRouter } from "vue-router"
-import { ref,onMounted,watch,onBeforeMount} from "vue"
+import { ref} from "vue"
 import { DMOBJ, DMSETTINGS } from "src/base/dm"
 import { encryptString } from "src/base/security"
 import dmLanguage from "src/components/dmLanguage.vue"

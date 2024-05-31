@@ -43,6 +43,7 @@ export default {
   msgRequiredField: "Required Field",
   // S
   msgStatus: "Status",
+  msgSuccess: "Succeed",
   // T
   // U
   msgUpdateName: "Updated by",

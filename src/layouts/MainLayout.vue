@@ -1,7 +1,7 @@
 <template>
   <q-layout view="hHh Lpr lFf">
       <q-header :class="Dark.isActive?'bg-dark text-white':'bg-white text-grey-9'" bordered> 
-      <q-toolbar>
+      <q-toolbar class="q-pa-md">
         <img src="/icons/favicon-32x32.png" />
         <q-toolbar-title>ONE</q-toolbar-title>
         <q-space />

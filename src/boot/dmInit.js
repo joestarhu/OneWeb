@@ -4,7 +4,7 @@ import { DMSETTINGS } from "src/base/dm"
 
 export default boot(({ app }) => {
     // 主题色的导入
-    const mode = localStorage.getItem(DMSETTINGS.appearance) || "false"
+    const mode = localStorage.getItem(DMSETTINGS.appearance) || "auto"
 
     switch (mode) {
         case "auto":

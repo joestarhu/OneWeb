@@ -43,6 +43,7 @@ export default {
     msgRequiredField: "必填字段",
     // S
     msgStatus: "状态",
+    msgSuccess: "成功",
     // T
     // U
     msgUpdateName: "更新人",
