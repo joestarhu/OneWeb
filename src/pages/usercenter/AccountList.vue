@@ -4,17 +4,22 @@
 
     <q-dialog persistent v-model="actPnl.show">
         <dmDialog :title="actPnl.res.title">
-
                 <dmForm @submit="btnClick(DMBTN.confirm.id)" :btnLoading="actPnl.res.loading">
-                    <!-- <q-skeleton v-for=" obj of viewDetail" :key="obj" class="q-mb-md" type="QInput"></q-skeleton> -->
                     <div v-if="actPnl.res.title != actRes.delete.title">
-                        <dmInput v-for=" obj of viewDetail" :key="obj" :qProps="obj.qProps" :dmType="obj.dmType" :dmAppend="obj.dmAppend" v-model="obj.value"  />
+                        <div v-if="actPnl.loading">
+                            <q-skeleton v-for=" obj of viewDetail" :key="obj" class="q-mb-md" type="QInput"></q-skeleton>
+                        </div>
+                        <div v-else>
+                            <dmInput v-for=" obj of viewDetail" :key="obj" :qProps="obj.qProps" :dmType="obj.dmType" :dmAppend="obj.dmAppend" v-model="obj.value"  />
+                        </div>
                     </div>
                     <div v-else>
                         {{ actPnl.data.account }}
                     </div>
+                    <template #right_btn v-if="actPnl.loading">
+                        <q-skeleton type="QBtn"></q-skeleton>
+                    </template>
                 </dmForm>
-
         </dmDialog>
     </q-dialog>
 </q-page>
@@ -24,7 +29,7 @@
 import { useQuasar } from "quasar"
 import { useRouter } from 'vue-router'
 import { useI18n } from "vue-i18n"
-import {readonly, ref} from "vue"
+import {ref} from "vue"
 import { DMOBJ,DMTBL,DMINPUT,DMBTN } from "src/base/dm"
 import { modelBase,modelUser } from "src/base/model"
 import dmTbl from "src/components/dmTbl.vue"
@@ -113,9 +118,10 @@ function btnClick(btnID, props = null){
         case DMBTN.edit.id:
             pnl.show = true
             pnl.res = actRes.edit
+            pnl.data = props.row
             viewDetail.account.qProps.readonly = true
             viewDetail.phone.qProps.readonly = true
-            getDetail(props.row.id)
+            getDetail(pnl.data.id)
             break
         case DMBTN.delete.id:
             pnl.show = true
@@ -135,6 +141,11 @@ function btnClick(btnID, props = null){
                     }
                     break
                 case actRes.edit.title:
+                    data = {
+                        user_id: pnl.data.id,
+                        nick_name:viewDetail.nick_name.value,
+                        status:viewDetail.status.value
+                    }
                     break
                 case actRes.delete.title:
                     break
