@@ -31,11 +31,11 @@ export default route(function (/* { store, ssrContext } */) {
     // 用户登录信息
     let loginInfo = getLoginInfo()
 
-    // 如果无用户登录信息
-    if (loginInfo == null) {
-      to.path === '/login' ? next() : next('/login')
-    } else {
+    // 用户已登录
+    if (loginInfo != null && loginInfo["org"].org_id != null) {
       to.path === '/login' ? next('/') : next()
+    } else {
+      to.path === '/login' ? next() : next('/login')
     }
   })
 

@@ -71,7 +71,7 @@ const userInfo = ref({
 
 const menuList = ref({
   one:{
-    title:"",children:[
+    title:"msgSysUC",children:[
       {title:"msgMenuAccount",to:"/account",icon:"o_person"},
       {title:"msgMenuOrg",to:"/org",icon:"o_corporate_fare"},
     ]

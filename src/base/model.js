@@ -20,5 +20,14 @@ const modelUser = {
     status: { label: "msgStatus", options: [{ label: "启用", value: 1, style: dmSTYLE.enable }, { label: "停用", value: 0, style: dmSTYLE.disable },] },
 }
 
+// 组织相关模型
+const modelOrg = {
+    name: { label: "msgOrgName" },
+    owner_name: { label: "msgOrgOwnerName" },
+    remark: { label: "msgRemark" },
+    status: { label: "msgStatus", options: [{ label: "启用", value: 1, style: dmSTYLE.enable }, { label: "停用", value: 0, style: dmSTYLE.disable },] },
+}
 
-export { modelBase, modelUser }
+
+
+export { modelBase, modelUser, modelOrg }

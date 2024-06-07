@@ -7,31 +7,46 @@
                 <dmAppearance></dmAppearance>
             </div>
             <q-card :class="Dark.isActive?'one-login-form-dark text-white text-center q-pa-md':'one-login-form text-grey-9 text-center q-pa-md'" >
-                <q-card-section>
-                    <div class="text-h6 text-bold">WELCOME</div>
-                </q-card-section>
+                <div v-if="!selectedOrg">
+                    <q-card-section>
+                        <div class="text-h6 text-bold">WELCOME</div>
+                    </q-card-section>
 
-                <q-form class="q-pb-md" @submit="passwordLogin" >
-                <q-card-section class="row-inline col">
-                    <q-input v-bind="viewLogin.account" v-model="viewLogin.account.value">
-                        <template #label>{{ t(viewLogin.account.label) }}</template>
-                            <template #prepend>
-                                <q-icon name="o_person"></q-icon>
-                            </template>
-                        </q-input>
-                        <q-input v-bind="viewLogin.passwd" v-model="viewLogin.passwd.value">
-                            <template #label>
-                                {{ t(viewLogin.passwd.label) }}
-                            </template>
-                            <template #prepend>
-                                <q-icon name="o_password"></q-icon>
-                            </template>
-                        </q-input>
+                    <q-form class="q-pb-md" @submit="passwordLogin">
+                    <q-card-section class="row-inline col">
+                        <q-input v-bind="viewLogin.account" v-model="viewLogin.account.value">
+                            <template #label>{{ t(viewLogin.account.label) }}</template>
+                                <template #prepend>
+                                    <q-icon name="o_person"></q-icon>
+                                </template>
+                            </q-input>
+                            <q-input v-bind="viewLogin.passwd" v-model="viewLogin.passwd.value">
+                                <template #label>
+                                    {{ t(viewLogin.passwd.label) }}
+                                </template>
+                                <template #prepend>
+                                    <q-icon name="o_password"></q-icon>
+                                </template>
+                            </q-input>
+                    </q-card-section>
+                    <q-card-actions vertical>
+                        <q-btn v-bind="viewLogin.login">{{ t("msgLogin") }}</q-btn>
+                    </q-card-actions>
+                    </q-form>
+            </div>
+            <div v-else>
+                <q-card-section>
+                    <div class="text-h6 text-bold">
+                        <q-btn icon="logout" flat @click="logout"></q-btn>
+                        WELCOME
+                    </div>
+                    <q-list bordered separator>
+                        <q-item>
+                        </q-item>
+                        <q-item>B</q-item>
+                    </q-list>
                 </q-card-section>
-                <q-card-actions vertical>
-                    <q-btn v-bind="viewLogin.login">{{ t("msgLogin") }}</q-btn>
-                </q-card-actions>
-                </q-form>
+            </div>
             </q-card>
         </q-page>
     </q-page-container>
@@ -43,14 +58,16 @@
 import { useI18n } from "vue-i18n"
 import { useQuasar,Dark } from "quasar"
 import { useRouter } from "vue-router"
-import { ref} from "vue"
+import { ref, onMounted} from "vue"
 import { DMOBJ, DMSETTINGS } from "src/base/dm"
-import { encryptString } from "src/base/security"
+import { encryptString,getLoginInfo } from "src/base/security"
 import dmLanguage from "src/components/dmLanguage.vue"
 import dmAppearance from "src/components/dmAppearance.vue"
 
 const { t } = useI18n()
 const dm = new DMOBJ(useQuasar(),useRouter())
+// 是否需要选择组织信息
+const selectedOrg = ref(false)
 
 const viewLogin = ref({
     account:{label:"msgAccount",rules: [val => val && val.length > 0 || t("msgRequiredField")],value:""},
@@ -60,9 +77,25 @@ const viewLogin = ref({
 
 
 function loginSuccess(rsp){
-    localStorage.setItem(DMSETTINGS.jwt,rsp.data)
-    dm.router.push("/")
+    let data = rsp.data
+    localStorage.setItem(DMSETTINGS.jwt,data)
+    let payload = getLoginInfo(data)
+    let org = payload["org"]
+    // 判断用户组织状态是否已经确定
+    if(org.org_id == null){
+        // 未选定组织信息 需要选取组织
+        selectedOrg.value=true
+    }else{
+        // 已选定组织信息
+        dm.router.push("/")
+    }    
 }
+
+function logout(){
+    selectedOrg.value=false
+    dm.logout()
+}
+
 
 
 function passwordLogin(){
@@ -77,6 +110,15 @@ function passwordLogin(){
 
     dm.post(url,postData,viewLoginRef.login,loginSuccess)
 }
+
+
+onMounted(()=>{
+    // 获取登录用户信息
+    let payload = getLoginInfo()
+    if(payload !=null){
+        selectedOrg.value=true
+    }    
+})
 </script>
 
 <style>

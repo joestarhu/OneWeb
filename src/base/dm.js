@@ -146,10 +146,17 @@ const DMINPUT = {
         let params = { filled: true, "lazy-rules": true, hint: '', dense: false, ...qProps }
         return ref({ dmType: "select", qProps: params, value: value })
     },
+    // 选择查询
     select_query: (qProps, value = null) => {
         let params = { filled: false, debounce: 500, dense: true, clearable: true, style: "width:265px;", outlined: true, ...qProps }
         return ref({ dmType: "select", qProps: params, value: value })
     },
+
+    // 带筛选的选择输入
+    selectFilter: (qProps, value = null) => {
+        let params = { filled: true, "lazy-rules": true, hint: '', dense: false, ...qProps }
+        return ref({ dmType: "selectFilter", qProps: params, value: value })
+    }
 }
 
 

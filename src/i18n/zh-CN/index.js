@@ -36,11 +36,15 @@ export default {
     msgNo: "取消",
     msgNoData: "无数据",
     // O
+    msgOrg: "组织",
+    msgOrgName: "组织名称",
+    msgOrgOwnerName: "组织所有者",
     // P
     msgPassword: "密码",
     msgPhone: "手机号",
     // Q
     // R
+    msgRemark: "备注",
     msgRequired: "必需",
     msgRequiredField: "必填字段",
     // S
@@ -59,6 +63,7 @@ export default {
 
 
     // 统一用户中心 | ONE
+    msgSysUC: "统一用户中心",
     msgMenuAccount: "账号",
     msgMenuOrg: "组织",
 
@@ -66,4 +71,7 @@ export default {
     msgPnlAccountEdit: "编辑账户",
     msgPnlAccountDelete: "删除账户",
 
+    msgPnlOrgCreate: "新增组织",
+    msgPnlOrgEdit: "编辑组织",
+    msgPnlOrgDelete: "删除组织",
 }

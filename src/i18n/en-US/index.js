@@ -37,11 +37,15 @@ export default {
   msgNo: "No",
   msgNoData: "No Data",
   // O
+  msgOrg: "Organization",
+  msgOrgName: "Organization Name",
+  msgOrgOwnerName: "Owner",
   // P
   msgPassword: "Password",
   msgPhone: "Phone",
   // Q
   // R
+  msgRemark: "Remark",
   msgRequired: "Required",
   msgRequiredField: "Required Field",
   // S
@@ -59,10 +63,15 @@ export default {
   // Z
 
   // 统一用户中心 | ONE
+  msgSysUC: "Unified User Center",
   msgMenuAccount: "Account",
   msgMenuOrg: "Organization",
 
   msgPnlAccountCreate: "Create Account",
   msgPnlAccountEdit: "Edit Account",
   msgPnlAccountDelete: "Delete Account",
+
+  msgPnlOrgCreate: "Create Organization",
+  msgPnlOrgEdit: "Edit Organization",
+  msgPnlOrgDelete: "Delete Organization",
 }

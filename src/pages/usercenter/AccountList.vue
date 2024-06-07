@@ -14,7 +14,7 @@
                         </div>
                     </div>
                     <div v-else>
-                         {{t("msgAccount")}}:<span class="text-negative">{{  actPnl.data.account }}</span> {{ t("msgDeleteWarning") }}
+                         {{t("msgAccount")}}:<span class="text-negative text-bold">{{  actPnl.data.account }}</span> {{ t("msgDeleteWarning") }}
                     </div>
                     <template #right_btn v-if="actPnl.loading">
                         <q-skeleton type="QBtn"></q-skeleton>

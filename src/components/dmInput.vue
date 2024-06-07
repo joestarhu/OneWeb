@@ -31,6 +31,27 @@
             </q-item>
         </template>
     </q-select>
+
+    <!-- 带查询能力的选择框:selectFilter -->
+    <q-select v-if="dmType == 'selectFilter'" v-bind="qProps" v-model.trim="innerValue" :label="$t(qProps.label)" @filter="filterFn" emit-value map-options use-input>
+        <template #no-option>
+            <q-item>
+                <q-item-section class="text-grey">
+                    {{ $t('msgNoData') }}
+                </q-item-section>
+            </q-item>
+        </template>
+        <template #option="scope">
+            <q-item v-bind="scope.itemProps">
+                <q-item-section>
+                    <q-item-label>{{ scope.opt.label }}</q-item-label>
+                    <q-item-label caption>{{ scope.opt.caption }}</q-item-label>
+                </q-item-section>
+            </q-item>
+        </template>
+    </q-select>
+
+
 </template>
 
 <script>

@@ -54,7 +54,7 @@ export default defineComponent({
 
 <style scoped>
 .card-pnl {
-    min-width: 375px;
+    min-width: 500px;
     max-width: 88vw;
     max-height: 88vh;
 }

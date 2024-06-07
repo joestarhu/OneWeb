@@ -15,35 +15,14 @@ function encryptString(value) {
     return encrypted.toString();
 }
 
-function getLoginInfo() {
-    let jwt = localStorage.getItem(DMSETTINGS.jwt)
+
+function getLoginInfo(token = null) {
+    let jwt = token || localStorage.getItem(DMSETTINGS.jwt)
     if (jwt == null) {
         return jwt
     }
     let payload = JSON.parse(Base64.decode(jwt.split('.')[1]))
     return payload
 }
-
-// 解析JWT
-// function getJwtPayload(jwt) {
-//     let payload = JSON.parse(Base64.decode(jwt.split('.')[1]))
-//     return payload
-// }
-
-// 解析jwt字符串
-// function getLoginOrg(jwt) {
-//     let payload = getJwtPayload(jwt)
-//     let loginOrg = payload['login_org'] || null
-//     return loginOrg
-// }
-
-//
-// function getUserOrgs(jwt) {
-//     let payload = getJwtPayload(jwt)
-//     let userOrgs = payload['user_orgs'] || []
-//     return userOrgs
-// }
-
-
 
 export { encryptString, getLoginInfo }
