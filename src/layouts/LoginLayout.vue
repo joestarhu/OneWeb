@@ -40,11 +40,16 @@
                         <q-btn icon="logout" flat @click="logout"></q-btn>
                         WELCOME
                     </div>
-                    <q-list bordered separator>
-                        <q-item>
-                        </q-item>
-                        <q-item>B</q-item>
-                    </q-list>
+                    <q-scroll-area style="height: 300px;" visible v-if="userOrgs.length != 0">
+                            <q-list bordered separator>
+                                <q-item clickable v-ripple @click="orgChoice(org.id)" v-for="org in userOrgs"
+                                    :key="org" class="text-left">
+                                    <q-item-section avatar><q-avatar icon="o_public"></q-avatar></q-item-section>
+                                    <q-item-section>{{ org.name }}</q-item-section>
+                                </q-item>
+                            </q-list>
+                        </q-scroll-area>
+                        <span class="flex flex-center text-grey-8" style="height: 300px;" v-else>{{ $t('msgNoData')}}</span>
                 </q-card-section>
             </div>
             </q-card>
@@ -68,6 +73,7 @@ const { t } = useI18n()
 const dm = new DMOBJ(useQuasar(),useRouter())
 // 是否需要选择组织信息
 const selectedOrg = ref(false)
+const userOrgs = ref([])
 
 const viewLogin = ref({
     account:{label:"msgAccount",rules: [val => val && val.length > 0 || t("msgRequiredField")],value:""},
@@ -85,6 +91,7 @@ function loginSuccess(rsp){
     if(org.org_id == null){
         // 未选定组织信息 需要选取组织
         selectedOrg.value=true
+        getUserOrgs()
     }else{
         // 已选定组织信息
         dm.router.push("/")
@@ -95,7 +102,6 @@ function logout(){
     selectedOrg.value=false
     dm.logout()
 }
-
 
 
 function passwordLogin(){
@@ -112,11 +118,26 @@ function passwordLogin(){
 }
 
 
+function getUserOrgs(){
+    // 获取用户的组织信息
+    dm.get("/auth/org",null,null,(rsp)=>{
+        userOrgs.value = rsp.data
+    })
+}
+
+
+function orgChoice(org_id){
+    // 选择登录组织信息
+    dm.post("/auth/org",{org_id:org_id},null,loginSuccess)
+}
+
+
 onMounted(()=>{
     // 获取登录用户信息
     let payload = getLoginInfo()
-    if(payload !=null){
+    if(payload != null){
         selectedOrg.value=true
+        getUserOrgs() 
     }    
 })
 </script>
@@ -129,7 +150,7 @@ onMounted(()=>{
 .one-language{
     position:absolute;
     top:1rem;
-    right:5rem;
+    right:3rem;
 }
 
 .one-login-form{

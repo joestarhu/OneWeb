@@ -66,6 +66,7 @@ export default {
     msgSysUC: "统一用户中心",
     msgMenuAccount: "账号",
     msgMenuOrg: "组织",
+    msgMenuApp: "应用",
 
     msgPnlAccountCreate: "新增账户",
     msgPnlAccountEdit: "编辑账户",

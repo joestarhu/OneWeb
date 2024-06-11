@@ -124,14 +124,23 @@ function btnClick(btnID, props = null){
             pnl.data = props.row
             break;
         case DMBTN.confirm.id:
-        let data = null
+            let data = null
             switch(pnl.res.title){
                 case actRes.create.title:
                     data = {
+                        name:viewDetail.name.value,
+                        owner_id:viewDetail.owner_id.value,
+                        remark:viewDetail.remark.value,
+                        status:viewDetail.status.value
                     }
                     break
                 case actRes.edit.title:
                     data = {
+                        org_id:pnl.data.id,
+                        name:viewDetail.name.value,
+                        owner_id:viewDetail.owner_id.value,
+                        remark:viewDetail.remark.value,
+                        status:viewDetail.status.value
                     }
                     break
                 case actRes.delete.title:
