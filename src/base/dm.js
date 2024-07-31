@@ -4,9 +4,13 @@ import { api } from '../boot/axios'
 
 // 全局的宏定义
 const DMSETTINGS = {
+    // 语言
     locale: "user-locale",
+    // jwt
     jwt: "jwt",
+    // 分页大小
     pageSize: "pageSize",
+    // 外观颜色
     appearance: "appearance",
 
     // dmInput
@@ -15,7 +19,7 @@ const DMSETTINGS = {
 }
 
 // 信息弹窗样式
-const MSG_BASE_OPTS = { timeout: 2000, position: "top", progress: true, classes: "glossy" };
+const MSG_BASE_OPTS = { timeout: 3000, position: "top", progress: true, classes: "glossy" };
 const MSG_OK_OPTS = { ...MSG_BASE_OPTS, type: "positive" };
 const MSG_NG_OPTS = { ...MSG_BASE_OPTS, type: "negative" };
 
@@ -55,11 +59,10 @@ class DMOBJ {
     }
 
     apiNG(err) {
-        // 请求api失败,非200返回码
 
-        // 网络原因造成的错误,请求未到达服务器
-        if (err.code == "ERR_NETWORK") {
-            this.msgNG({ message: "Network Error", })
+        // 请求未返回的错误
+        if (!err.response) {
+            this.msgNG({ message: err.message })
             return
         }
 
@@ -126,35 +129,35 @@ class DMOBJ {
 const DMINPUT = {
     // 普通输入
     text: (qProps, value = null) => {
-        let params = { filled: true, "lazy-rules": true, hint: "", dense: false, ...qProps }
+        let params = { outlined: true, "lazy-rules": true, hint: "", dense: true, ...qProps }
         return ref({ dmType: "text", qProps: params, value: value })
     },
     // 必填普通输入
     text_required: (qProps, value = null) => {
-        let params = { filled: true, "lazy-rules": true, hint: "", dense: false, ...qProps }
+        let params = { outlined: true, "lazy-rules": true, hint: "", dense: true, ...qProps }
         return ref({ dmType: "text", dmAppend: DMSETTINGS.dmInputAppendRequired, qProps: params, value: value })
     },
     // 查询输入
     test_query: (qProps, value = null) => {
-        let params = { filled: false, debounce: 500, dense: true, clearable: true, style: "width:265px;", outlined: true, ...qProps }
+        let params = { debounce: 500, dense: true, clearable: true, style: "width:265px;", outlined: true, ...qProps }
         // let params = { standout: "bg-secondary text-white", debounce: 500, dense: true, clearable: true, style: "width:265px;", ...qProps }
         return ref({ dmType: "text", dmAppend: DMSETTINGS.dmInputAppendQuery, qProps: params, value: value })
     },
 
     // 选择输入
     select: (qProps, value = null) => {
-        let params = { filled: true, "lazy-rules": true, hint: '', dense: false, ...qProps }
+        let params = { outlined: true, "lazy-rules": true, hint: '', dense: true, ...qProps }
         return ref({ dmType: "select", qProps: params, value: value })
     },
     // 选择查询
     select_query: (qProps, value = null) => {
-        let params = { filled: false, debounce: 500, dense: true, clearable: true, style: "width:265px;", outlined: true, ...qProps }
+        let params = { debounce: 500, dense: true, clearable: true, style: "width:265px;", outlined: true, ...qProps }
         return ref({ dmType: "select", qProps: params, value: value })
     },
 
     // 带筛选的选择输入
     selectFilter: (qProps, value = null) => {
-        let params = { filled: true, "lazy-rules": true, hint: '', dense: false, ...qProps }
+        let params = { outlined: true, "lazy-rules": true, hint: '', dense: true, ...qProps }
         return ref({ dmType: "selectFilter", qProps: params, value: value })
     }
 }
