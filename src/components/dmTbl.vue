@@ -1,6 +1,6 @@
 <template>
     <q-table v-bind="qProps" :rows-per-page-options="rows_per_page_options" :pagination="pagination"
-        v-model:pagination="pagination" @request="onRequest" class="q-pa-md" flat bordered>
+        v-model:pagination="pagination" @request="onRequest" class="q-pa-md" bordered>
         <template v-slot:top>
             <div class="col row q-col-gutter-xs">
                 <dmInput v-for="obj in dmQueryInput" :key="obj" :qProps="obj.qProps" :dmType="obj.dmType" :dmAppend="obj.dmAppend"
@@ -44,7 +44,7 @@
         <template #body-cell-btns="props">
             <q-td :props="props" class="q-gutter-xs">
                 <q-btn v-for="obj in dmRowBtn" :key="obj.id" :color="obj.color" :icon="obj.icon"
-                    @click="btnClick(obj.id, props)" dense outline rounded>
+                    @click="btnClick(obj.id, props)" dense>
                     <q-tooltip>
                         {{$t(obj.label)}}
                     </q-tooltip>

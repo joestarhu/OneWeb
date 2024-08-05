@@ -17,8 +17,10 @@ export default {
   // D
   msgDelete: "Delete",
   msgDeleteWarning: "will be deleted,once deleted there is no going back.Please be certain",
+  msgDisable: "Disable",
   // E
   msgEdit: "Edit",
+  msgEnable: "Enable",
   // F
   // G
   // H

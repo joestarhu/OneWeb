@@ -1,4 +1,4 @@
-import { ref } from 'vue';
+import { reactive } from 'vue';
 import { api } from '../boot/axios'
 
 
@@ -12,6 +12,9 @@ const DMSETTINGS = {
     pageSize: "pageSize",
     // 外观颜色
     appearance: "appearance",
+
+    // 查询控件的style
+    queryStyle: { width: "225px" },
 
     // dmInput
     dmInputAppendRequired: 0,
@@ -130,35 +133,35 @@ const DMINPUT = {
     // 普通输入
     text: (qProps, value = null) => {
         let params = { outlined: true, "lazy-rules": true, hint: "", dense: true, ...qProps }
-        return ref({ dmType: "text", qProps: params, value: value })
+        return reactive({ dmType: "text", qProps: params, value: value })
     },
     // 必填普通输入
     text_required: (qProps, value = null) => {
         let params = { outlined: true, "lazy-rules": true, hint: "", dense: true, ...qProps }
-        return ref({ dmType: "text", dmAppend: DMSETTINGS.dmInputAppendRequired, qProps: params, value: value })
+        return reactive({ dmType: "text", dmAppend: DMSETTINGS.dmInputAppendRequired, qProps: params, value: value })
     },
     // 查询输入
-    test_query: (qProps, value = null) => {
-        let params = { debounce: 500, dense: true, clearable: true, style: "width:265px;", outlined: true, ...qProps }
+    text_query: (qProps, value = null) => {
+        let params = { debounce: 500, dense: true, clearable: true, style: DMSETTINGS.queryStyle, outlined: true, ...qProps }
         // let params = { standout: "bg-secondary text-white", debounce: 500, dense: true, clearable: true, style: "width:265px;", ...qProps }
-        return ref({ dmType: "text", dmAppend: DMSETTINGS.dmInputAppendQuery, qProps: params, value: value })
+        return reactive({ dmType: "text", dmAppend: DMSETTINGS.dmInputAppendQuery, qProps: params, value: value })
     },
 
     // 选择输入
     select: (qProps, value = null) => {
         let params = { outlined: true, "lazy-rules": true, hint: '', dense: true, ...qProps }
-        return ref({ dmType: "select", qProps: params, value: value })
+        return reactive({ dmType: "select", qProps: params, value: value })
     },
     // 选择查询
     select_query: (qProps, value = null) => {
-        let params = { debounce: 500, dense: true, clearable: true, style: "width:265px;", outlined: true, ...qProps }
-        return ref({ dmType: "select", qProps: params, value: value })
+        let params = { debounce: 500, dense: true, clearable: true, style: DMSETTINGS.queryStyle, outlined: true, ...qProps }
+        return reactive({ dmType: "select", qProps: params, value: value })
     },
 
     // 带筛选的选择输入
     selectFilter: (qProps, value = null) => {
         let params = { outlined: true, "lazy-rules": true, hint: '', dense: true, ...qProps }
-        return ref({ dmType: "selectFilter", qProps: params, value: value })
+        return reactive({ dmType: "selectFilter", qProps: params, value: value })
     }
 }
 
@@ -174,7 +177,7 @@ const DMBTN = {
 function showOptLabel(value, opts) {
     for (let obj of opts) {
         if (obj.value === value) {
-            return obj.label
+            return obj.label;
         }
     }
     return ""

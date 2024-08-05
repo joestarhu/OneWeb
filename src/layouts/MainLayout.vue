@@ -1,20 +1,20 @@
 <template>
   <q-layout view="hHh Lpr lFf">
-      <q-header :class="Dark.isActive?'bg-dark text-white':'bg-white text-grey-9'" bordered> 
-      <q-toolbar class="q-pa-md">
-        <img src="/icons/favicon-32x32.png" />
-        <q-toolbar-title>ONE</q-toolbar-title>
-        <q-space />
-          <div class="q-gutter-sm row-inline">
-            <dmAppearance/>
-            <dmLanguage />
-          <q-avatar class="dm-avatar">
-            <img :src=userInfo.avatar />
+    <q-header>
+      <q-toolbar>
+        <q-toolbar-title >
+          {{ $t("msgSysUC") }}
+        </q-toolbar-title>
+        <div><dmLanguage></dmLanguage></div>
+        <div><dmAppearance></dmAppearance></div>
+        <div class="q-ma-sm">
+          <q-avatar class="dm-avatar" >
+            <img :src="userInfo.avatar">
             <q-popup-proxy>
               <q-list dense>
                 <q-item clickable>
                   <q-item-section>
-                    <span>{{ userInfo.nick_name }}</span>
+                    <span class="ellipsis">{{userInfo.nick_name}}</span>
                   </q-item-section>
                 </q-item>
                 <q-separator />
@@ -31,11 +31,8 @@
       </q-toolbar>
     </q-header>
 
-    <q-drawer
-      v-model="leftDrawerOpen"
-      show-if-above
-      bordered>
-      <q-list class="q-ma-md">
+    <q-drawer show-if-above bordered>
+      <q-list class="q-ma-md q-gutter-xs">
         <dmMenu v-for="link in menuList" :key="link.title" v-bind="link"></dmMenu>
       </q-list>
     </q-drawer>
@@ -47,31 +44,25 @@
 </template>
 
 <script setup>
-import { useQuasar,Dark } from "quasar"
+import { useQuasar } from "quasar"
 import { useRouter } from "vue-router"
-import {ref,onMounted} from "vue"
-import { getLoginInfo } from "src/base/security"
-import { DMOBJ, DMSETTINGS } from "src/base/dm"
-import dmMenu from "components/dmMenu.vue"
-import dmLanguage from "components/dmLanguage.vue"
-import dmAppearance from "components/dmAppearance.vue"
+import { ref,reactive,onMounted } from "vue";
+import { DMOBJ, DMSETTINGS } from "src/base/dm";
+import dmLanguage from "src/components/dmLanguage.vue";
+import dmAppearance from "src/components/dmAppearance.vue";
+import dmMenu from "src/components/dmMenu.vue";
 
 const dm = new DMOBJ(useQuasar(),useRouter())
-
-const leftDrawerOpen = ref(false)
-
-const userInfo = ref({
-  nick_name: "Nick Name",
+let userInfo = reactive({
+  nick_name:"NickName",
   avatar: "https://demos.pixinvent.com/materialize-vuejs-admin-template/demo-2/images/avatars/avatar-1.png",
-  user_orgs: {},
-  login_org_name: "",
-  owner_flag:false,
-  admin_org:false,
 })
 
-const menuList = ref({
+
+const menuList = reactive({
   one:{
-    title:"msgSysUC",children:[
+    title:"",
+    children:[
       {title:"msgMenuAccount",to:"/account",icon:"o_person"},
       {title:"msgMenuOrg",to:"/org",icon:"o_corporate_fare"},
       {title:"msgMenuApp",to:"/app",icon:"o_widgets"},
@@ -79,26 +70,56 @@ const menuList = ref({
   },
 })
 
+
 function logout(){
   dm.logout()
 }
 
-function initData(){
-  // 用户信息加载
-  let loginInfo = getLoginInfo()
-  if(loginInfo != null){
-    let userInfoValue = userInfo.value
-    userInfoValue.nick_name = loginInfo["user"]["nick_name"]
-  }
+function getUserProfile(){
+  dm.get("/auth/org_user",null,null,(rsp)=>{
+    userInfo.nick_name =  rsp.data.user_name
+    if (rsp.data.avatar){
+      userInfo.avatar = rsp.data.avatar
+    }
+  })
 }
 
 
 onMounted(()=>{
-  initData()
+  getUserProfile()
 })
 
 
 </script>
+
+
+
+<!-- <script>
+import { defineComponent, ref } from 'vue'
+import dmLanguage from 'src/components/dmLanguage.vue'
+import dmAppearance from 'src/components/dmAppearance.vue'
+
+export default defineComponent({
+  name: 'MainLayout',
+
+  components: {
+    dmAppearance,
+    dmLanguage
+  },
+
+  setup () {
+    const leftDrawerOpen = ref(false)
+
+    return {
+      leftDrawerOpen,
+      toggleLeftDrawer () {
+        leftDrawerOpen.value = !leftDrawerOpen.value
+      }
+    }
+  }
+})
+</script> -->
+
 
 <style>
 .dm-avatar {

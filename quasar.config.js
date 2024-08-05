@@ -52,7 +52,7 @@ module.exports = configure(function (/* ctx */) {
 
       'roboto-font', // optional, you are not bound to it
       'material-icons', // optional, you are not bound to it
-      'material-icons-outlined',
+      'material-icons-outlined', // optional, you are not bound to it
     ],
 
     // Full list of options: https://v2.quasar.dev/quasar-cli-vite/quasar-config-js#build
@@ -104,7 +104,7 @@ module.exports = configure(function (/* ctx */) {
 
       // iconSet: 'material-icons', // Quasar icon set
       // lang: 'en-US', // Quasar language pack
-      lang: 'zh-CN',
+      lang: "zh-CN",
 
       // For special cases outside of where the auto-import strategy can have an impact
       // (like functional components as one of the examples),
@@ -114,7 +114,7 @@ module.exports = configure(function (/* ctx */) {
       // directives: [],
 
       // Quasar plugins
-      plugins: ['Notify', 'Dialog', 'LocalStorage', 'SessionStorage', 'AppFullscreen']
+      plugins: ["Notify"]
     },
 
     // animations: 'all', // --- includes all animations
@@ -203,7 +203,7 @@ module.exports = configure(function (/* ctx */) {
       builder: {
         // https://www.electron.build/configuration/configuration
 
-        appId: 'one'
+        appId: 'web'
       }
     },
 

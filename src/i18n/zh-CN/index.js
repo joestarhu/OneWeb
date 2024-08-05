@@ -16,8 +16,10 @@ export default {
     // D
     msgDelete: "删除",
     msgDeleteWarning: "将被删除,数据删除后将无法恢复.请确认",
+    msgDisable: "停用",
     // E
     msgEdit: "编辑",
+    msgEnable: "启用",
     // F
     // G,
     // H
