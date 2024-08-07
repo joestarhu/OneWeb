@@ -1,6 +1,7 @@
 import { route } from 'quasar/wrappers'
 import { createRouter, createMemoryHistory, createWebHistory, createWebHashHistory } from 'vue-router'
 import routes from './routes'
+import { getLoginInfo } from 'src/base/security'
 
 /*
  * If not building with SSR mode, you can
@@ -25,6 +26,21 @@ export default route(function (/* { store, ssrContext } */) {
     // quasar.conf.js -> build -> publicPath
     history: createHistory(process.env.VUE_ROUTER_BASE)
   })
+
+  Router.beforeEach((to, from, next) => {
+    let loginInfo = getLoginInfo()
+
+    if (loginInfo != null && loginInfo["org_uuid"] != null) {
+      // 已有登录信息和登录组织信息
+      to.path === "/login" ? next("/") : next()
+    } else {
+      to.path === '/login' ? next() : next('/login')
+    }
+
+
+  })
+
+
 
   return Router
 })

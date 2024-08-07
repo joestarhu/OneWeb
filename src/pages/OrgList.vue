@@ -127,6 +127,43 @@ function btnClick(btnID,props=null){
             actPnl.data = props.row
             break;
         case DMBTN.confirm.id:
+        let data = null
+            switch(actPnl.res.title){
+                case actRes.create.title:
+                    data = {
+                        org_name:detailPnl.org_name.value,
+                        owner_uuid:detailPnl.user_uuid.value,
+                        remark:detailPnl.remark.value,
+                        status:detailPnl.status.value
+                    }
+                    break;
+                case actRes.edit.title:
+                    data = {
+                        org_uuid:actPnl.data.org_uuid,
+                        org_name:detailPnl.org_name.value,
+                        owner_uuid:detailPnl.user_uuid.value,
+                        remark:detailPnl.remark.value,
+                        status:detailPnl.status.value
+                    }
+                    break;
+                case actRes.delete.title:
+                    data = {
+                        org_uuid:actPnl.data.user_uuid,
+                    }
+                    break;
+                default:
+                    // should not be here...
+                    break;
+            }
+
+
+            dm.post(actPnl.res.url, data, actPnl.res, (rsp) => {
+                dm.msgOK({ message: t('msgSuccess') })
+                getList(tbl.pagination)
+                actPnl.show = false
+            })
+
+
             break;
         default:
             // should not be here
