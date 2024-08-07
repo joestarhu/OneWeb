@@ -8,8 +8,8 @@ const dmSTYLE = {
 const modelBase = {
     create_name: { label: "msgCreateName" },
     update_name: { label: "msgUpdateName" },
-    create_dt: { label: "msgCreateDt" },
-    update_dt: { label: "msgUpdateDt" }
+    created_at: { label: "msgCreateDt" },
+    updated_at: { label: "msgUpdateDt" }
 }
 
 // 用户信息

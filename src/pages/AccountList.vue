@@ -57,8 +57,8 @@ const tbl = reactive({
         DMTBL.col("account",modelUser.account.label),
         DMTBL.col("phone",modelUser.phone.label),
         DMTBL.col("nick_name",modelUser.nick_name.label),
-        DMTBL.col("update_dt",modelBase.update_dt.label),
-        DMTBL.col("create_dt",modelBase.create_dt.label),
+        DMTBL.col("updated_at",modelBase.updated_at.label),
+        DMTBL.col("created_at",modelBase.created_at.label),
         {
             ...DMTBL.col("status",modelUser.status.label,modelUser.status.options),style:row=>{
                 let sts = modelUser.status
@@ -157,7 +157,7 @@ function btnClick(btnID, props = null){
             }
 
 
-            dm.post(actPnl.res.url, data, actPnl, (rsp) => {
+            dm.post(actPnl.res.url, data, actPnl.res, (rsp) => {
                 dm.msgOK({ message: t('msgSuccess') })
                 getList(tbl.pagination)
                 actPnl.show = false
