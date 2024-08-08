@@ -2,12 +2,10 @@
     <q-item-label header class="text-weight-bold text-uppercase" v-if="title">
         {{ $t(title) }}
     </q-item-label>
-
     <q-expansion-item hide-expand-icon class="overflow-hidden dm_memu" active-class="dm_menu_active"
         v-for="info in children" :icon="info.icon ? info.icon : 'widgets'" :key="info" :label=$t(info.title)
         :to="info.to" :href="info.link">
     </q-expansion-item>
-
 </template>
 
 

@@ -39,6 +39,7 @@ export default {
     msgNoData: "无数据",
     // O
     msgOrg: "组织",
+    msgOrgChoose: "请选择一个组织",
     msgOrgName: "组织名称",
     msgOrgOwnerName: "组织所有者",
     // P

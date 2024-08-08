@@ -40,6 +40,7 @@ export default {
   msgNoData: "No Data",
   // O
   msgOrg: "Organization",
+  msgOrgChoose: "Please choose an organization",
   msgOrgName: "Organization Name",
   msgOrgOwnerName: "Owner",
   // P
