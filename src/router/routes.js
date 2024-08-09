@@ -12,6 +12,9 @@ const routes = [
   {
     path: "/login", component: () => import("layouts/LoginLayout.vue")
   },
+  {
+    path: "/applist", component: () => import("layouts/AppLayout.vue")
+  },
   // Always leave this as last one,
   // but you can also remove it
   {

@@ -5,6 +5,7 @@
         <q-toolbar-title >
           {{ $t("msgSysUC") }}
         </q-toolbar-title>
+        <div><q-btn icon="apps" dense flat to="/applist"></q-btn></div>
         <div><dmLanguage></dmLanguage></div>
         <div><dmAppearance></dmAppearance></div>
         <div class="q-ma-sm">
