@@ -28,37 +28,18 @@
     </q-card>
 </template>
 
-<script>
-import { defineComponent } from "vue"
-export default defineComponent({
-    name: "dmForm",
-    emits: ["submit"],
-    props: {
-        title: {
-            type: String,
-            default: "",
-        },
-        btnMsg: {
-            type: String,
-            default: "msgYes",
-        },
-        btnLoading: {
-            type: Boolean,
-            default: false,
-        },
-    },
-
-    setup(props, ctx) {
-        function submit() {
-            ctx.emit("submit")
-        }
-        return {
-            submit,
-        }
-    }
+<script setup>
+const emit = defineEmits(["submit"])
+const props = defineProps({
+    title: {type: String, default: ""},
+    btnMsg: {type: String,default: "msgYes"},
+    btnLoading: {type: Boolean,default: false},
 })
-</script>
 
+function submit(){
+    emit("submit")
+}
+</script>
 
 <style scoped>
 .card-pnl {

@@ -29,27 +29,17 @@
 </template>
 
 
-<script>
-import {defineComponent} from "vue"
+<script setup>
 
-export default defineComponent({
-    name:"dmDialog",
-    emits:["submit"],
-    props:{
-        title:{type:String, default:"Title"},
-        showAct:{type:Boolean,default:false},
-    },
-    setup(props,ctx){
-        function submit(){
-            ctx.emit("submit")
-        }
-
-        return{
-            submit,
-        }
-    }
+const props = defineProps({
+    title:{type:String, default:"Title"},
+    showAct:{type:Boolean,default:false},
 })
+const emit = defineEmits(['submit']);
 
+function submit(){
+    emit("submit")
+}
 </script>
 
 <style scoped>
