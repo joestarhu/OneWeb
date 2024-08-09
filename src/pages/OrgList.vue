@@ -148,7 +148,7 @@ function btnClick(btnID,props=null){
                     break;
                 case actRes.delete.title:
                     data = {
-                        org_uuid:actPnl.data.user_uuid,
+                        org_uuid:actPnl.data.org_uuid,
                     }
                     break;
                 default:
@@ -156,14 +156,11 @@ function btnClick(btnID,props=null){
                     break;
             }
 
-
             dm.post(actPnl.res.url, data, actPnl.res, (rsp) => {
                 dm.msgOK({ message: t('msgSuccess') })
                 getList(tbl.pagination)
                 actPnl.show = false
             })
-
-
             break;
         default:
             // should not be here

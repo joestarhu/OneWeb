@@ -42,7 +42,7 @@ import dmForm from "src/components/dmForm.vue";
 import dmInput from "src/components/dmInput.vue";
 
 
-const dm = new DMOBJ(useQuasar(),useRouter);
+const dm = new DMOBJ(useQuasar(),useRouter());
 const {t} = useI18n();
 
 const tbl = reactive({

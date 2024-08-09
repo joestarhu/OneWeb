@@ -89,7 +89,7 @@ function loginSuccess(rsp){
 
 
 function loginFailed(rsp){
-    dm.msgNG({message:"登录翻车了",caption:rsp.code})
+    dm.msgNG({message:rsp.message,caption:rsp.code})
 }
 
 function login(){
