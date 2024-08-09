@@ -54,16 +54,14 @@
     </q-table>
 </template>
 
-<script>
-import { defineComponent,ref,onMounted} from "vue"
+<script setup>
+import { ref,reactive,onMounted} from "vue"
 import { DMSETTINGS} from "src/base/dm"
 import dmInput from "src/components/dmInput.vue"
 
-export default defineComponent({
-    name:"dmTbl",
-    emits:["btnClick","query"],
-    components:{dmInput},
-    props:{
+
+const emit = defineEmits(["btnClick","query"])
+const props = defineProps({
         // quasar原始属性
         qProps:{type:Object},
         // 每行的操作按钮
@@ -72,43 +70,34 @@ export default defineComponent({
         dmQueryInput:{ default:[]},
         // 头部操作按钮
         dmHeaderBtn:{default:[]},
-    },
+})
 
-    setup(props,ctx){
-        const rows_per_page_options = [10, 20, 30, 100]
-        const pageSize = localStorage.getItem(DMSETTINGS.pageSize)
-        const pagination = ref({page:1,rowsNumber:0, rowsPerPage:10})
-
-        function onRequest(data){
-            if(data != null){
-                pagination.value.page = data.pagination.page
-                if(pagination.value.rowsPerPage != data.pagination.rowsPerPage){
-                    localStorage.setItem(DMSETTINGS.pageSize, data.pagination.rowsPerPage)
-                    pagination.value.rowsPerPage = data.pagination.rowsPerPage
-                }
-            }
-            ctx.emit("query", pagination.value)
-        }
-
-        function btnClick(id,data){
-            ctx.emit("btnClick", id, data)
-        }
+const rows_per_page_options = [10, 20, 30, 100]
+const pageSize = localStorage.getItem(DMSETTINGS.pageSize)
+const pagination = reactive({page:1,rowsNumber:0, rowsPerPage:10})
 
 
-        onMounted(()=>{
-            // 读取通用的数据
-            if (pageSize) {
-                pagination.value.rowsPerPage = pageSize
-            }
-            ctx.emit("query", pagination.value)
-        })
-
-        return {
-            pagination,
-            rows_per_page_options,
-            btnClick,
-            onRequest,
+function onRequest(data){
+    if(data != null){
+        pagination.page = data.pagination.page
+        
+        if(pagination.rowsPerPage != data.pagination.rowsPerPage){
+            localStorage.setItem(DMSETTINGS.pageSize, data.pagination.rowsPerPage)
+            pagination.rowsPerPage = data.pagination.rowsPerPage
         }
     }
+    emit("query", pagination)
+}
+
+function btnClick(id,data){
+    emit("btnClick", id, data)
+}
+
+onMounted(()=>{
+    // 读取通用的数据
+    if (pageSize) {
+        pagination.rowsPerPage = pageSize
+    }
+    emit("query", pagination)
 })
 </script>

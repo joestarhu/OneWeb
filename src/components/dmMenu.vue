@@ -8,13 +8,8 @@
     </q-expansion-item>
 </template>
 
-
-<script>
-import { defineComponent } from "vue"
-
-export default defineComponent({
-    name: "dmMenu",
-    props: {
+<script setup>
+const props = defineProps({
         // 标题
         title: { type: String, required: true },
         // 副标题:未实现
@@ -24,8 +19,7 @@ export default defineComponent({
         // 跳转路由链接:未实现
         to: { type: String, default: "#" },
         // 子菜单
-        children: { type: Object, default: null },
-    }
+        children: { type: Object, default: null },    
 })
 </script>
 

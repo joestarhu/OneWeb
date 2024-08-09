@@ -54,51 +54,32 @@
 
 </template>
 
-<script>
-import { defineComponent,ref,watch,watchEffect} from 'vue';
+<script setup>
+import { ref,watch,watchEffect} from 'vue';
 import { DMSETTINGS } from 'src/base/dm'
 
-export default defineComponent({
-    name:"dmInput",
-    emits:["update:modelValue","filter"],
-    props:{
-        qProps:{
-            type:Object
-        },
-        modelValue:{
-            required:true
-        },
-        dmType:{
-            type:String,
-            default:"text",
-        },
-        dmAppend:{
-            type:Number,
-            default:null,
-        },
-    },
-    setup(props,ctx){
-        const innerValue = ref(props.modelValue);
-
-        // 监听内部值的改变，更新父组件的值
-        watch(
-            innerValue, newValue=>{
-                ctx.emit("update:modelValue", newValue);
-            }
-        );
-
-        // 父组件的值改变,子组件也变动
-        watchEffect(()=>{
-            innerValue.value = props.modelValue;
-        });
-
-        return{
-            DMSETTINGS,
-            innerValue,
-            filterFn(val, update, abort){
-                ctx.emit("filter", val, update, abort);
-            }
-        }
-    }
+const emit = defineEmits(["update:modelValue","filter"])
+const props = defineProps({
+    qProps:{type:Object},
+    modelValue:{required:true},
+    dmType:{type:String,default:"text"},
+    dmAppend:{type:Number,default:null},
 })
+
+const innerValue = ref(props.modelValue);
+
+function filterFn(val, update, abort){
+    emit("filter", val, update, abort);
+}
+
+
+// 监听内部值的改变，更新父组件的值
+watch(innerValue,newValue=>{
+    emit("update:modelValue", newValue)
+});
+
+// 父组件的值改变,子组件也变动
+watchEffect(()=>{
+    innerValue.value = props.modelValue;
+});
 </script>
