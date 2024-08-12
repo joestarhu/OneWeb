@@ -69,6 +69,7 @@ export default {
   msgSysUC: "Unified User Center",
   msgMenuAccount: "Account",
   msgMenuOrg: "Organization",
+  msgMenuRole: "Role",
   msgMenuApp: "Application",
 
   msgPnlAccountCreate: "Create Account",

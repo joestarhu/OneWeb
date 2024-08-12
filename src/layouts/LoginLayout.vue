@@ -83,7 +83,7 @@ function loginSuccess(rsp){
         needSelectOrg.value=true
         getUserOrgs()
     }else{
-        dm.router.push("/")
+        dm.router.push("/applist")
     }    
 }
 

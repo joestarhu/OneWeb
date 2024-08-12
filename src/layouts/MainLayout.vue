@@ -8,7 +8,7 @@
         <div><q-btn icon="apps" dense flat to="/applist"></q-btn></div>
         <div><dmLanguage></dmLanguage></div>
         <div><dmAppearance></dmAppearance></div>
-        <div><dmUserAvatar></dmUserAvatar></div>
+        <div class="q-px-sm"><dmUserAvatar></dmUserAvatar></div>
       </q-toolbar>
     </q-header>
 
@@ -41,9 +41,10 @@ const menuList = reactive({
   one:{
     title:"",
     children:[
-      {title:"msgMenuAccount",to:"/account",icon:"o_person"},
-      {title:"msgMenuOrg",to:"/org",icon:"o_corporate_fare"},
-      {title:"msgMenuApp",to:"/app",icon:"o_widgets"},
+      {title:"msgMenuAccount",to:"/one/account",icon:"o_person"},
+      {title:"msgMenuOrg",to:"/one/org",icon:"o_corporate_fare"},
+      {title:"msgMenuRole",to:"/one/role",icon:"o_contact_emergency"},
+      {title:"msgMenuApp",to:"/one/app",icon:"o_widgets"},
     ]
   },
 })

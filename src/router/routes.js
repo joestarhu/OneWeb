@@ -1,12 +1,14 @@
 
 const routes = [
   {
-    path: '/',
+    path: '/one',
     component: () => import('layouts/MainLayout.vue'),
     children: [
-      { path: '', component: () => import('pages/IndexPage.vue') },
-      { path: '/account', component: () => import('pages/AccountList.vue') },
-      { path: '/org', component: () => import('pages/OrgList.vue') },
+      { path: '', component: () => import('pages/OneManager/IndexPage.vue') },
+      { path: '/one/account', component: () => import('src/pages/OneManager/AccountList.vue') },
+      { path: '/one/org', component: () => import('src/pages/OneManager/OrgList.vue') },
+      { path: '/one/role', component: () => import('src/pages/OneManager/RoleList.vue') },
+      { path: '/one/app', component: () => import('src/pages/OneManager/AppList.vue') },
     ]
   },
   {
