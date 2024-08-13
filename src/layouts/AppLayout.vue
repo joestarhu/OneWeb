@@ -1,8 +1,8 @@
 <template>
   <q-layout view="hHh Lpr lFf">
     <q-header>
-      <q-toolbar >
-        <q-toolbar-title >
+      <q-toolbar>
+        <q-toolbar-title>
           <q-icon name="corporate_fare"></q-icon>
           {{ orgName }}
         </q-toolbar-title>
@@ -44,7 +44,7 @@
 
 
 <script setup>
-import { useQuasar,Dark } from "quasar"
+import { useQuasar, Dark } from "quasar"
 import { useRouter } from "vue-router"
 import { ref, reactive, onMounted } from "vue";
 import { DMOBJ } from "src/base/dm";
@@ -77,14 +77,14 @@ function getOrgName() {
 }
 
 
-function setupAppList(){
+function setupAppList() {
   let payload = getLoginInfo()
-  
-  if (payload.org_is_admin==true){
+
+  if (payload.org_is_admin == true) {
     appList.value.push({ icon: "hub", name: "One Manager", caption: "用于维护账号,组织,角色,应用等信息", to: "/one" })
   }
 
-  appList.value.push({ icon: "public", name: "One", caption: "统一用户中心;管理用户,角色,部门和权限", to: "/one" })
+  appList.value.push({ icon: "coffee", name: "One", caption: "统一用户中心;管理用户,角色,部门和权限", to: "/one" })
 
 
   // 平台级组织可以有One Manager,其他全部过滤

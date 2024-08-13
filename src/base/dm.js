@@ -1,5 +1,6 @@
 import { reactive } from 'vue';
 import { api } from '../boot/axios'
+import { debounce } from 'quasar';
 
 
 // 全局的宏定义
@@ -19,6 +20,8 @@ const DMSETTINGS = {
     // dmInput
     dmInputAppendRequired: 0,
     dmInputAppendQuery: 1,
+    debounce: 500,
+
 }
 
 // 信息弹窗样式
@@ -148,7 +151,7 @@ const DMINPUT = {
     },
     // 查询输入
     text_query: (qProps, value = null) => {
-        let params = { debounce: 500, dense: true, clearable: true, style: DMSETTINGS.queryStyle, outlined: true, ...qProps }
+        let params = { debounce: DMSETTINGS.debounce, dense: true, clearable: true, style: DMSETTINGS.queryStyle, outlined: true, ...qProps }
         // let params = { standout: "bg-secondary text-white", debounce: 500, dense: true, clearable: true, style: "width:265px;", ...qProps }
         return reactive({ dmType: "text", dmAppend: DMSETTINGS.dmInputAppendQuery, qProps: params, value: value })
     },
@@ -160,13 +163,15 @@ const DMINPUT = {
     },
     // 选择查询
     select_query: (qProps, value = null) => {
-        let params = { debounce: 500, dense: true, clearable: true, style: DMSETTINGS.queryStyle, outlined: true, ...qProps }
+        let params = { dense: true, clearable: true, style: DMSETTINGS.queryStyle, outlined: true, ...qProps }
         return reactive({ dmType: "select", qProps: params, value: value })
     },
 
     // 带筛选的选择输入
     selectFilter: (qProps, value = null) => {
-        let params = { outlined: true, "lazy-rules": true, hint: '', dense: true, ...qProps }
+        let params = {
+            "fill-input": true, "hide-selected": true, outlined: true, "lazy-rules": true, hint: '', dense: true, ...qProps
+        }
         return reactive({ dmType: "selectFilter", qProps: params, value: value })
     }
 }
