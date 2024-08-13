@@ -25,6 +25,7 @@ const DMSETTINGS = {
 const MSG_BASE_OPTS = { timeout: 3000, position: "top", progress: true, classes: "glossy" };
 const MSG_OK_OPTS = { ...MSG_BASE_OPTS, type: "positive" };
 const MSG_NG_OPTS = { ...MSG_BASE_OPTS, type: "negative" };
+const MSG_INFO_OPTS = { ...MSG_BASE_OPTS, type: "warning" };
 
 class DMOBJ {
     constructor(quasarObj, routerObj) {
@@ -45,8 +46,13 @@ class DMOBJ {
     }
 
     msgNG(opts) {
-        // quasar正常系的通知提醒
+        // quasar异常系的通知提醒
         this.obj.notify({ ...MSG_NG_OPTS, ...opts })
+    }
+
+    msgInfo(opts) {
+        // quasar提醒消息系的通知提醒
+        this.obj.notify({ ...MSG_INFO_OPTS, ...opts })
     }
 
     apiOK(rsp, cbFn = null, errFn = null) {

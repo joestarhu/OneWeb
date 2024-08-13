@@ -19,8 +19,8 @@
                             </template>
                         </q-input>
                     </q-card-section>
-                    <q-card-actions vertical>
-                        <q-btn v-bind="PassowrdLogin.login">{{ $t("msgLogin") }}</q-btn>
+                    <q-card-actions>
+                        <q-btn v-bind="PassowrdLogin.login" class="full-width">{{ $t("msgLogin") }}</q-btn>
                     </q-card-actions>
                     </q-form>
                     <q-card-section v-if="needSelectOrg">

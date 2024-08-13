@@ -47,5 +47,6 @@ function submit(){
     min-width: 500px;
     max-width: 88vw;
     max-height: 88vh;
+    border-radius: 10px;
 }
 </style>
