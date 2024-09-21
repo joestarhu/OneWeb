@@ -28,5 +28,18 @@ const modelOrg = {
     status: { label: "msgStatus", options: [{ label: "启用", value: 1, style: dmSTYLE.enable }, { label: "停用", value: 0, style: dmSTYLE.disable },] },
 }
 
+// 角色信息
+const modelRole = {
+    role_name: { label: "msgRoleName" },
+    role_remark: { label: "msgRemark" },
+    status: { label: "msgStatus", options: [{ label: "启用", value: 1, style: dmSTYLE.enable }, { label: "停用", value: 0, style: dmSTYLE.disable },] },
+}
 
-export { modelBase, modelUser, modelOrg }
+// 应用信息
+const modelApp = {
+    app_name: { label: "msgAppName" },
+    app_remark: { label: "msgRemark" },
+    status: { label: "msgStatus", options: [{ label: "启用", value: 1, style: dmSTYLE.enable }, { label: "停用", value: 0, style: dmSTYLE.disable },] },
+}
+
+export { modelBase, modelUser, modelOrg, modelRole, modelApp }

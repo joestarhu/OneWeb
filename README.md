@@ -1,4 +1,4 @@
-# ONE (one)
+# Quasar App (web)
 
 A Quasar Project
 

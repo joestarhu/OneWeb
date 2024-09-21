@@ -5,7 +5,10 @@ export default {
 
   // A
   msgAccount: "Account",
+  msgAccountCreate: "Create Account",
   msgAction: "Action",
+  msgAppName: "Application Name",
+  msgAppServices: "Application Services",
   // B
   // C
   msgCancel: "Cancel",
@@ -25,6 +28,7 @@ export default {
   // G
   // H
   // I
+  msgInfo: "Info",
   // J
   // K
   // L
@@ -48,6 +52,7 @@ export default {
   msgPhone: "Phone",
   // Q
   // R
+  msgRoleName: "Role Name",
   msgRemark: "Remark",
   msgRequired: "Required",
   msgRequiredField: "Required Field",

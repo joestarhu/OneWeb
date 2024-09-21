@@ -5,7 +5,10 @@ export default {
 
     // A
     msgAccount: "账号",
+    msgAccountCreate: "创建账号",
     msgAction: "操作",
+    msgAppName: "应用名称",
+    msgAppServices: "应用服务",
     // B
     // C
     msgCancel: "取消",
@@ -15,15 +18,16 @@ export default {
     msgConfirm: "确认",
     // D
     msgDelete: "删除",
-    msgDeleteWarning: "将被删除,数据删除后将无法恢复.请确认",
+    msgDeleteWarning: "将被删除,删除后数据将无法恢复.请确认",
     msgDisable: "停用",
     // E
     msgEdit: "编辑",
     msgEnable: "启用",
     // F
-    // G,
+    // G
     // H
     // I
+    msgInfo: "详情",
     // J
     // K
     // L
@@ -47,6 +51,7 @@ export default {
     msgPhone: "手机号",
     // Q
     // R
+    msgRoleName: "角色名称",
     msgRemark: "备注",
     msgRequired: "必需",
     msgRequiredField: "必填字段",

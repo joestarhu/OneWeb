@@ -2,8 +2,14 @@
     <q-layout view="lHh lpr lFf">
         <q-page-container>
             <q-page class="flex flex-center">
+                <q-card class="absolute-top-right q-ma-md q-pa-sm">
+                    <dmLanguage class="q-ml-sm"></dmLanguage>
+                    <dmAppearance class="q-mx-sm"></dmAppearance>
+                </q-card>
+                
+
                   <q-card class="row-inline one-login-form">
-                    <q-form @submit="login" v-if="!needSelectOrg">
+                    <q-form @submit.prevent="login" v-if="!needSelectOrg">
                     <q-card-section class="q-pa-md q-gutter-sm">
                         <p class="text-center text-h6 text-bold">{{ $t("msgLogin") }}</p>
                         <q-input v-bind="PassowrdLogin.account" v-model="PassowrdLogin.account.value">
@@ -38,8 +44,7 @@
                     </q-card-section>
                     <q-card-section class="row">
                         <div class="col">
-                            <dmLanguage></dmLanguage>
-                            <dmAppearance></dmAppearance>
+                            <q-btn flat dense color="primary">{{ $t("msgAccountCreate")}}</q-btn>
                         </div>
                         <div class="col row reverse">
                             <q-btn icon="qr_code" flat  v-if="!needSelectOrg" dense></q-btn>
@@ -71,7 +76,7 @@ const userOrgs = ref([])
 let PassowrdLogin = reactive({
     account: { label: "msgAccount", rules: [val => val && val.length > 0 || t("msgRequiredField")], value: "" },
     passwd: { label: "msgPassword", type: "password", rules: [val => val && val.length > 0 || t("msgRequiredField")], value: "" },
-    login: { color: "primary", type: "submit", glossy:true},
+    login: { color: "primary", type: "submit"},
 })
 
 function loginSuccess(rsp){
@@ -83,7 +88,7 @@ function loginSuccess(rsp){
         needSelectOrg.value=true
         getUserOrgs()
     }else{
-        dm.router.push("/applist")
+        dm.router.push("/")
     }    
 }
 

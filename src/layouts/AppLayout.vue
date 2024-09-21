@@ -63,10 +63,6 @@ const orgName = ref("")
 
 
 let appList = ref([
-  // { icon: "hub", name: "One Manager", caption: "用于维护账号,组织,角色,应用等信息", to: "/one" },
-  // { icon: "public", name: "One", caption: "统一用户中心;管理用户,角色,部门和权限", to: "/one" },
-  // { icon: "storage", name: "Data Nexus", caption: "数据治理平台", to: "/one" },
-  // { icon: "message", name: "Message Center", caption: "消息中心", href: "https://www.baidu.com/" },
 ])
 
 
@@ -90,15 +86,7 @@ function setupAppList() {
   // 平台级组织可以有One Manager,其他全部过滤
 
 
-}
-
-
-
-function bar() {
-  dm.msgInfo({ message: "wrd", caption: "dsadhask" });
-}
-
-onMounted(() => {
+}onMounted(() => {
   getOrgName()
   setupAppList()
 })

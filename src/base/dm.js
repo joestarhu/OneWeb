@@ -25,10 +25,14 @@ const DMSETTINGS = {
 }
 
 // 信息弹窗样式
-const MSG_BASE_OPTS = { timeout: 3000, position: "top", progress: true, classes: "glossy" };
+const MSG_BASE_OPTS = { timeout: 3000, position: "top", progress: true };
 const MSG_OK_OPTS = { ...MSG_BASE_OPTS, type: "positive" };
 const MSG_NG_OPTS = { ...MSG_BASE_OPTS, type: "negative" };
-const MSG_INFO_OPTS = { ...MSG_BASE_OPTS, type: "warning" };
+const MSG_INFO_OPTS = { ...MSG_BASE_OPTS, type: "secondary" };
+
+
+
+
 
 class DMOBJ {
     constructor(quasarObj, routerObj) {
@@ -80,7 +84,7 @@ class DMOBJ {
 
         switch (err.response.status) {
             case 401:
-                this.msgNG({ message: "用户未授权认证或授权已过期,请重新登录" })
+                this.msgInfo({ message: "用户未授权认证或授权已过期,请重新登录" })
                 this.logout()
                 break;
             case 403:
@@ -136,6 +140,24 @@ class DMOBJ {
         // get请求
         await this.httpReq(url, data, actLoading, callbackFn, errCallbackFn)
     }
+
+    dmTblGetList(pagination, tbl, url, data) {
+        // 更新pagination信息
+        if (!tbl.pagination) {
+            tbl.pagination = pagination
+        }
+
+        // 获取数据
+        this.get(url, data, tbl,
+            (rsp) => {
+                let responseData = rsp.data
+                tbl.rows = responseData.records
+                pagination.rowsNumber = responseData.pagination.total
+            }
+        )
+    }
+
+
 }
 
 const DMINPUT = {
@@ -169,9 +191,7 @@ const DMINPUT = {
 
     // 带筛选的选择输入
     selectFilter: (qProps, value = null) => {
-        let params = {
-            "fill-input": true, "hide-selected": true, outlined: true, "lazy-rules": true, hint: '', dense: true, ...qProps
-        }
+        let params = { outlined: true, "lazy-rules": true, hint: '', dense: true, ...qProps }
         return reactive({ dmType: "selectFilter", qProps: params, value: value })
     }
 }
@@ -179,9 +199,13 @@ const DMINPUT = {
 
 const DMBTN = {
     delete: { id: 0, label: "msgDelete", color: "primary", icon: "o_delete" },
-    create: { id: 1, label: "msgCreate", color: "primary" },
+    create: { id: 1, label: "msgCreate", color: "primary", icon: "o_add" },
     edit: { id: 2, label: "msgEdit", color: "primary", icon: "o_edit" },
     confirm: { id: 3, label: "msgConfirm", color: "primary" },
+    info: { id: 4, label: "msgInfo", color: "primary", icon: "o_feed" },
+
+    app_service: { id: 100, label: "msgAppServices", color: "primary", icon: "o_fact_check" },
+
 }
 
 

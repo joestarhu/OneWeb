@@ -32,7 +32,7 @@ export default route(function (/* { store, ssrContext } */) {
 
     if (loginInfo != null && loginInfo["org_uuid"] != null) {
       // 已有登录信息和登录组织信息
-      to.path === "/login" ? next("/applist") : next()
+      to.path === "/login" ? next("/") : next()
     } else {
       to.path === '/login' ? next() : next('/login')
     }

@@ -11,7 +11,7 @@
             </div>
         </q-card-section>
 
-        <q-form @submit="submit">
+        <q-form @submit.prevent="submit">
             <q-card-section>
                 <slot></slot>
             </q-card-section>

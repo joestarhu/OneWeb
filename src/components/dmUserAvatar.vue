@@ -1,6 +1,7 @@
 <template>
-    <q-avatar class="dm-avatar">
-        <img :src="userInfo.avatar">
+    <q-avatar class="dm-avatar" color="indigo">
+        <span v-show="!userInfo.avatar">{{ userInfo.nick_name[0] }}</span>
+        <img :src="userInfo.avatar" v-show="userInfo.avatar">
         <q-popup-proxy>
             <q-list dense>
                 <q-item clickable>
@@ -29,7 +30,7 @@ import { DMOBJ } from "src/base/dm";
 const dm = new DMOBJ(useQuasar(),useRouter())
 let userInfo = reactive({
   nick_name:"NickName",
-  avatar: "https://demos.pixinvent.com/materialize-vuejs-admin-template/demo-2/images/avatars/avatar-1.png",
+  avatar: "",
 })
 
 function logout(){
@@ -38,7 +39,7 @@ function logout(){
 
 function getUserProfile(){
   dm.get("/auth/org_user",null,null,(rsp)=>{
-    userInfo.nick_name =  rsp.data.user_name
+    userInfo.nick_name =  rsp.data.org_user_name
     if (rsp.data.avatar){
       userInfo.avatar = rsp.data.avatar
     }

@@ -1,14 +1,18 @@
 <template>
     <q-table v-bind="qProps" :rows-per-page-options="rows_per_page_options" :pagination="pagination"
-        v-model:pagination="pagination" @request="onRequest" class="q-pa-md" bordered>
+        v-model:pagination="pagination" @request="onRequest" class="q-pa-md" bordered flat>
         <template v-slot:top>
             <div class="col row q-col-gutter-xs">
                 <dmInput v-for="obj in dmQueryInput" :key="obj" :qProps="obj.qProps" :dmType="obj.dmType" :dmAppend="obj.dmAppend"
                     v-model="obj.value" @update:model-value="onRequest(null)" />
             </div>
             <div class="col-inline reverse q-gutter-xs">
-                <q-btn v-for="obj in dmHeaderBtn" :key="obj.id" :label="$t(obj.label)" :color="obj.color" :icon="obj.icon"
-                    @click="btnClick(obj.id, props)" />
+                <q-btn v-for="obj in dmHeaderBtn" :key="obj.id" :color="obj.color" :icon="obj.icon"
+                    @click="btnClick(obj.id, props)" dense>
+                    <q-tooltip>
+                        {{$t(obj.label)}}
+                    </q-tooltip>
+                </q-btn>
             </div>
         </template>
 
@@ -55,7 +59,7 @@
 </template>
 
 <script setup>
-import { ref,reactive,onMounted} from "vue"
+import { reactive,onMounted} from "vue"
 import { DMSETTINGS} from "src/base/dm"
 import dmInput from "src/components/dmInput.vue"
 

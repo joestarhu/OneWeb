@@ -12,10 +12,10 @@
       <q-btn
         class="q-mt-xl"
         color="white"
-        text-color="blue"
+        text-color="primary"
         unelevated
-        to="/applist"
-        label="Go Home"
+        to="/"
+        label="返回主页"
         no-caps
       />
     </div>
