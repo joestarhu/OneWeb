@@ -2,7 +2,11 @@
     <q-layout view="lHh lpr lFf">
         <q-page-container>
             <q-page class="flex flex-center">
-                <q-card class="absolute-top-right q-ma-md q-pa-sm">
+                <div class="absolute-top-left q-ma-md q-pa-sm">
+                    <span class="text-h4 text-primary text-bold text-weight" style="font-family: futura;">Eromod</span>
+                </div>
+
+                <q-card class="absolute-top-right q-ma-md q-pa-sm flat" style="border-radius: 1rem;">
                     <dmLanguage class="q-ml-sm"></dmLanguage>
                     <dmAppearance class="q-mx-sm"></dmAppearance>
                 </q-card>
@@ -10,8 +14,8 @@
 
                   <q-card class="row-inline one-login-form">
                     <q-form @submit.prevent="login" v-if="!needSelectOrg">
-                    <q-card-section class="q-pa-md q-gutter-sm">
-                        <p class="text-center text-h6 text-bold">{{ $t("msgLogin") }}</p>
+                    <q-card-section class="q-pa-md q-gutter-md">
+                        <p class="text-center text-h4">{{ $t("msgLogin") }}</p>
                         <q-input v-bind="PassowrdLogin.account" v-model="PassowrdLogin.account.value">
                             <template #label>{{ $t(PassowrdLogin.account.label) }}</template>
                             <template #prepend>
@@ -30,7 +34,7 @@
                     </q-card-actions>
                     </q-form>
                     <q-card-section v-if="needSelectOrg">
-                        <p class="text-center text-h6 text-bold">{{ $t("msgOrgChoose") }}</p>
+                        <p class="text-center text-h4">{{ $t("msgOrgChoose") }}</p>
                         <q-scroll-area style="height: 210px;" visible>
                             <q-list bordered separator v-if="userOrgs.length != 0" dense>
                                     <q-item clickable v-ripple @click="orgChoice(org.org_uuid)" v-for="org in userOrgs"
@@ -60,7 +64,7 @@
 
 <script setup>
 import { useI18n } from 'vue-i18n';
-import { ref,reactive,onMounted } from 'vue';
+import { ref,reactive,onMounted,computed } from 'vue';
 import { useQuasar} from 'quasar';
 import { useRouter } from 'vue-router';
 import { DMOBJ, DMSETTINGS } from 'src/base/dm';
@@ -74,9 +78,11 @@ let needSelectOrg = ref(false)
 const userOrgs = ref([])
 
 let PassowrdLogin = reactive({
-    account: { label: "msgAccount", rules: [val => val && val.length > 0 || t("msgRequiredField")], value: "" },
-    passwd: { label: "msgPassword", type: "password", rules: [val => val && val.length > 0 || t("msgRequiredField")], value: "" },
-    login: { color: "primary", type: "submit"},
+    account: { label: "msgAccount", value: "" },
+    passwd: { label: "msgPassword", type: "password", value: "" },
+    login: { color: "primary", type: "submit", disable:computed(()=>{
+        return !(PassowrdLogin.account.value && PassowrdLogin.passwd.value)
+    })},
 })
 
 function loginSuccess(rsp){
@@ -140,10 +146,14 @@ onMounted(()=>{
 
 
 <style>
-
 .one-login-form {
-    border-radius: 15px;
-    width: 330px;
-    height: 350px;
+    border-radius: 1rem;
+    width:25rem;
+    height: 25rem;
+    /* height: 350px; */
+}
+
+.body--light{
+  background-color: #f9f9f9;
 }
 </style>

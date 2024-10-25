@@ -10,12 +10,14 @@ export default {
     msgAppName: "应用名称",
     msgAppServices: "应用服务",
     // B
+    msgBasicInfo: "基础信息",
     // C
     msgCancel: "取消",
     msgCreate: "新增",
     msgCreateName: "创建人",
     msgCreateDt: "创建时间",
     msgConfirm: "确认",
+    msgClose: "关闭",
     // D
     msgDelete: "删除",
     msgDeleteWarning: "将被删除,删除后数据将无法恢复.请确认",
@@ -49,12 +51,14 @@ export default {
     // P
     msgPassword: "密码",
     msgPhone: "手机号",
+    msgPhoneQuery: "至少输入3位",
     // Q
     // R
     msgRoleName: "角色名称",
     msgRemark: "备注",
     msgRequired: "必需",
     msgRequiredField: "必填字段",
+    msgResetPassword: "重置密码",
     // S
     msgStatus: "状态",
     msgSuccess: "成功",
@@ -77,11 +81,18 @@ export default {
     msgMenuRole: "角色",
     msgMenuApp: "应用",
 
-    msgPnlAccountCreate: "新增账户",
-    msgPnlAccountEdit: "编辑账户",
-    msgPnlAccountDelete: "删除账户",
+    msgPnlAccountCreate: "新增账号",
+    msgPnlAccountEdit: "编辑账号",
+    msgPnlAccountDelete: "删除账号",
+    msgPnlAccountSecurity: "账号安全",
+    msgPnlAccountList: "账号列表",
+    msgPnlAccountBasicInfo: "账号信息",
+    msgPnlAccountOrg: "账号组织信息",
 
     msgPnlOrgCreate: "新增组织",
     msgPnlOrgEdit: "编辑组织",
     msgPnlOrgDelete: "删除组织",
+    msgPnlOrgInfo: "组织详情",
+
+    msgPnlAppInfo: "应用详情",
 }

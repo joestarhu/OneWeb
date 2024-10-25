@@ -10,12 +10,14 @@ export default {
   msgAppName: "Application Name",
   msgAppServices: "Application Services",
   // B
+  msgBasicInfo: "Basic Information",
   // C
   msgCancel: "Cancel",
   msgCreate: "Create",
   msgCreateName: "Created by",
   msgCreateDt: "Create time",
   msgConfirm: "Confirm",
+  msgClose: "Close",
 
   // D
   msgDelete: "Delete",
@@ -50,12 +52,14 @@ export default {
   // P
   msgPassword: "Password",
   msgPhone: "Phone",
+  msgPhoneQuery: "At least 3 digits",
   // Q
   // R
   msgRoleName: "Role Name",
   msgRemark: "Remark",
   msgRequired: "Required",
   msgRequiredField: "Required Field",
+  msgResetPassword: "Reset Password",
   // S
   msgStatus: "Status",
   msgSuccess: "Succeed",
@@ -80,8 +84,15 @@ export default {
   msgPnlAccountCreate: "Create Account",
   msgPnlAccountEdit: "Edit Account",
   msgPnlAccountDelete: "Delete Account",
+  msgPnlAccountSecurity: "Account Security",
+  msgPnlAccountList: "Account List",
+  msgPnlAccountBasicInfo: "Account Information",
+  msgPnlAccountOrg: "Account Organization Info",
 
   msgPnlOrgCreate: "Create Organization",
   msgPnlOrgEdit: "Edit Organization",
   msgPnlOrgDelete: "Delete Organization",
+  msgPnlOrgInfo: "Organization Info",
+
+  msgPnlAppInfo: "Application Info",
 }

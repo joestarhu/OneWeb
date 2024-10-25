@@ -1,7 +1,6 @@
 <template>
     <q-avatar class="dm-avatar" color="indigo">
-        <span v-show="!userInfo.avatar">{{ userInfo.nick_name[0] }}</span>
-        <img :src="userInfo.avatar" v-show="userInfo.avatar">
+        <img :src="userInfo.avatar">
         <q-popup-proxy>
             <q-list dense>
                 <q-item clickable>
@@ -30,7 +29,7 @@ import { DMOBJ } from "src/base/dm";
 const dm = new DMOBJ(useQuasar(),useRouter())
 let userInfo = reactive({
   nick_name:"NickName",
-  avatar: "",
+  avatar: "/avatar.svg",
 })
 
 function logout(){

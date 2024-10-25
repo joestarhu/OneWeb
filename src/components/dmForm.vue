@@ -19,8 +19,8 @@
                 </div>
                 <div class="col row reverse q-gutter-sm">
                     <slot name="right_btn">
-                        <q-btn color="primary" type="submit" :loading="btnLoading">{{ $t(btnMsg) }}</q-btn>
-                        <q-btn v-close-popup>{{ $t('msgNo') }}</q-btn>
+                        <q-btn no-caps color="primary" type="submit" :loading="btnLoading">{{ $t(btnMsg) }}</q-btn>
+                        <q-btn no-caps flat v-close-popup>{{ $t('msgNo') }}</q-btn>
                     </slot>
                 </div>
             </q-card-section>
@@ -43,7 +43,7 @@ function submit(){
 
 <style scoped>
 .card-pnl {
-    max-width: 88vw;
-    max-height: 88vh;
+    max-width: 100vw;
+    max-height: 100vh;
 }
 </style>

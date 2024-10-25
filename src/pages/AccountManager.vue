@@ -1,29 +1,25 @@
 <template>
 <q-page padding>
-    <!-- 数据展示table -->
-    <dmTbl v-bind="tbl" @btnClick="btnClick" @query="getList"></dmTbl>
+    <!-- 列表 -->
+    <div v-show="!infoPnl.show">
+        <dmTbl v-bind="tbl" @btnClick="btnClick" @query="getList"></dmTbl>
+    </div>
 
-    <!-- 弹窗界面 -->
+    <!-- 详情 -->
+    <div v-if="infoPnl.show">
+        <q-btn no-caps dense flat :icon="DMBTN.back.icon" @click="btnClick(DMBTN.back.id)">{{ $t("msgPnlAccountList") }}</q-btn>
+        <q-card flat class="q-mt-sm">
+            <q-card-section> 
+                <AccountDetail :uuid="infoPnl.uuid" @close="btnClick(DMBTN.back.id)"></AccountDetail>
+            </q-card-section>
+        </q-card>
+    </div>
+
+    <!-- 弹窗界面(新增) -->
     <q-dialog persistent v-model="actPnl.show">
         <dmDialog :title="actPnl.res.title">
-            <dmForm @submit="btnClick(DMBTN.confirm.id)" :btnLoading="actPnl.res.loading">
-                <div v-if="actPnl.res.title == actRes.delete.title">
-                    {{t("msgAccount")}}:<span class="text-warning text-bold">{{  actPnl.data.account }}</span> {{ t("msgDeleteWarning") }}
-                </div>
-                <div v-else>
-                    <div v-if="actPnl.loading">
-                            <q-skeleton v-for="obj of detailPnl" :key="obj" class="q-mb-md" type="QInput"></q-skeleton>
-                    </div>
-                    <div v-else>
-                        <dmInput v-for="obj of detailPnl" 
-                            :key="obj" :qProps="obj.qProps" :dmType="obj.dmType" :dmAppend="obj.dmAppend" v-model="obj.value">
-                        </dmInput>
-                    </div>
-                </div>
-
-                <template #right_btn v-if="actPnl.loading">
-                    <q-skeleton type="QBtn"></q-skeleton>
-                </template>
+            <dmForm @submit="btnClick(DMBTN.confirm.id)" :btnLoading="actPnl.loading">
+                <dmInput v-for="obj of actComponent" :key="obj" :qProps="obj.qProps" :dmType="obj.dmType" :dmAppend="obj.dmAppend" v-model="obj.value" />
             </dmForm>
         </dmDialog>
     </q-dialog>
@@ -34,51 +30,31 @@
 import { useQuasar } from "quasar";
 import { useRouter } from "vue-router";
 import { useI18n } from "vue-i18n";
-import { reactive } from "vue";
+import { onMounted, reactive } from "vue";
 import { DMOBJ,DMTBL,DMINPUT,DMBTN } from "src/base/dm";
 import { modelBase,modelUser } from "src/base/model";
 import dmTbl from "src/components/dmTbl.vue";
 import dmDialog from "src/components/dmDialog.vue";
 import dmForm from "src/components/dmForm.vue";
 import dmInput from "src/components/dmInput.vue";
+import AccountDetail from "./AccountDetail.vue";
 
 const dm = new DMOBJ(useQuasar(),useRouter());
 const {t} = useI18n();
 
-
-const actRes = {
-    create:{title:"msgPnlAccountCreate",url:"/account/create"},
-    edit:{title:"msgPnlAccountEdit",url:"/account/update"},
-    delete:{title:"msgPnlAccountDelete",url:"/account/delete"},
-}
-
-const actPnl = reactive({
-    show:false,
-    loading:false,
-    res:actRes.create,
-    data:null
-})
-
-const detailPnl = {
-    account:DMINPUT.text_required({...modelUser.account,rules: [val => val && val.toString().length > 0 || t("msgRequiredField")]}),
-    phone:DMINPUT.text_required({...modelUser.phone,rules: [val => val && val.toString().length > 0 || t("msgRequiredField")]}),
-    nick_name:DMINPUT.text_required({...modelUser.nick_name,rules: [val => val && val.toString().length > 0 || t("msgRequiredField")]}),
-    user_status:DMINPUT.select(modelUser.status),
-}
-
-
 const tbl = reactive({
     dmQueryInput:{
-            phone:DMINPUT.text_query({...modelUser.phone,placeholder:"至少输入3位号码"}),
-            nick_name:DMINPUT.text_query(modelUser.nick_name),
-            status:DMINPUT.select_query(modelUser.status),
+        account:DMINPUT.text_query(modelUser.account),
+        nick_name:DMINPUT.text_query(modelUser.nick_name),
+        phone:DMINPUT.text_query({...modelUser.phone}),
+        status:DMINPUT.select_query(modelUser.status),
     },
     dmHeaderBtn:[DMBTN.create],
-    dmRowBtn:[DMBTN.edit,DMBTN.delete],
+    dmRowBtn:[DMBTN.info],
     columns:[
             DMTBL.col("account",modelUser.account.label),
-            DMTBL.col("phone",modelUser.phone.label),
             DMTBL.col("nick_name",modelUser.nick_name.label),
+            DMTBL.col("phone",modelUser.phone.label),
             DMTBL.col("updated_at",modelBase.updated_at.label),
             DMTBL.col("created_at",modelBase.created_at.label),
             {
@@ -93,109 +69,102 @@ const tbl = reactive({
                 },
             },
             DMTBL.btn("user_uuid"),
-        ],
+    ],
     rows:[],
     pagination:null,
 })
 
-
-function detailInit(){
-    detailPnl.account.value = ""
-    detailPnl.phone.value = ""
-    detailPnl.nick_name.value = ""
-    detailPnl.user_status.value = 1    
+const actRes = {
+    create: {title:"msgPnlAccountCreate", url:"/account/create"},
 }
 
+const actPnl = reactive({
+    show:false,
+    loading:false,
+    res:actRes.create,
+    data:null
+})
 
-function detailReadonly(flag){
-    detailPnl.account.qProps.readonly = flag
-    detailPnl.phone.qProps.readonly = flag
+const actComponent ={
+    account:DMINPUT.text_required({...modelUser.account,rules: [val => val && val.toString().length > 0 || t("msgRequiredField")]}),
+    nick_name:DMINPUT.text_required({...modelUser.nick_name,rules: [val => val && val.toString().length > 0 || t("msgRequiredField")]}),
+    phone:DMINPUT.text({...modelUser.phone}),
+    user_status:DMINPUT.select(modelUser.status),
 }
 
+const infoPnl = reactive({
+    show:false,
+    uuid:""
+})
 
-function btnClick(btnID, props = null){
+
+function accountCreateInit(){
+    actComponent.account.value ="";
+    actComponent.nick_name.value ="";
+    actComponent.phone.value ="";
+    actComponent.user_status.value =1;
+}
+
+function getList(pagination){
+    let inputValue = tbl.dmQueryInput
+    let data = {
+            page_idx:pagination.page,
+            page_size:pagination.rowsPerPage,
+            account:inputValue.account.value,
+            phone: inputValue.phone.value,
+            nick_name: inputValue.nick_name.value,
+            status: inputValue.status.value,
+    }
+    dm.dmTblGetList(pagination,tbl,"/account/list",data)
+}
+
+function accountShowDetail(uuid){
+    infoPnl.show=true
+    infoPnl.uuid = uuid
+}
+
+function btnClick(btnID, props=null){
     switch(btnID){
         case DMBTN.create.id:
-            actPnl.show = true;
+            accountCreateInit()
+            actPnl.show=true;
             actPnl.loading = false;
             actPnl.res = actRes.create;
-            actPnl.data = props.row;
-            detailInit();
-            detailReadonly(false);
             break;
-        case DMBTN.edit.id:
-            actPnl.show = true;
-            actPnl.loading = true;
-            actPnl.res = actRes.edit;
-            actPnl.data = props.row;
-            detailReadonly(true);
-            getDetail(props.row.user_uuid);
-            break;
-        case DMBTN.delete.id:
-            actPnl.show = true;
-            actPnl.loading = false;
-            actPnl.res = actRes.delete;
-            actPnl.data = props.row;
+        case DMBTN.info.id:
+            accountShowDetail(props.row.user_uuid)
             break;
         case DMBTN.confirm.id:
-            let data = null;
-            switch(actPnl.res.title){
-                case actRes.create.title:
-                    data = {
-                        account:detailPnl.account.value,
-                        phone:detailPnl.phone.value,
-                        nick_name:detailPnl.nick_name.value,
-                        user_status:detailPnl.user_status.value
-                    };
-                    break;
-                case actRes.edit.title:
-                    data = {
-                        user_uuid:actPnl.data.user_uuid,
-                        nick_name:detailPnl.nick_name.value,
-                        user_status:detailPnl.user_status.value
-                    };
-                    break;
-                case actRes.delete.title:
-                    data = {
-                        user_uuid:actPnl.data.user_uuid,
-                    }
-                    break;
-                default:
-                    break;
+            let requestData = {
+                account:actComponent.account.value,
+                phone:actComponent.phone.value,
+                nick_name:actComponent.nick_name.value,
+                user_status:actComponent.user_status.value
             }
 
-            dm.post(actPnl.res.url, data, actPnl.res, (rsp) => {
+            dm.post(actPnl.res.url, requestData, actPnl,
+                (rsp)=>{
                     dm.msgOK({ message: t('msgSuccess') })
                     getList(tbl.pagination)
                     actPnl.show = false
-            })
+                },
+                null
+            );
+            break;
+        case DMBTN.back.id:
+            infoPnl.show=false;
+            getList(tbl.pagination)
             break;
         default:
             break;
     }
 }
 
-
-function getList(pagination){
-    let data = {
-            page_idx:pagination.page,
-            page_size:pagination.rowsPerPage,
-            phone: tbl.dmQueryInput.phone.value,
-            nick_name: tbl.dmQueryInput.nick_name.value,
-            status: tbl.dmQueryInput.status.value,
+onMounted(()=>{
+    // 支持query参数看详情
+    if(dm.router.currentRoute.value.query["uuid"]){
+        accountShowDetail(dm.router.currentRoute.value.query["uuid"])
     }
-    dm.dmTblGetList(pagination,tbl,"/account/list",data)
-}
-
-
-function getDetail(user_uuid){
-    dm.get("/account/detail",{user_uuid:user_uuid},actPnl,
-        (rsp)=>{
-            for (let kw in detailPnl) {
-                detailPnl[kw].value = rsp.data[kw]
-            }            
-        }
-    )
-}
+})
 
 </script>

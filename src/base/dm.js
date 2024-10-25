@@ -151,14 +151,20 @@ class DMOBJ {
         this.get(url, data, tbl,
             (rsp) => {
                 let responseData = rsp.data
+                responseData.records.map(obj => {
+                    Object.keys(obj).forEach(key => {
+                        if (obj[key] === "") {
+                            obj[key] = "-";
+                        }
+                    })
+                })
                 tbl.rows = responseData.records
                 pagination.rowsNumber = responseData.pagination.total
             }
         )
     }
-
-
 }
+
 
 const DMINPUT = {
     // 普通输入
@@ -174,7 +180,6 @@ const DMINPUT = {
     // 查询输入
     text_query: (qProps, value = null) => {
         let params = { debounce: DMSETTINGS.debounce, dense: true, clearable: true, style: DMSETTINGS.queryStyle, outlined: true, ...qProps }
-        // let params = { standout: "bg-secondary text-white", debounce: 500, dense: true, clearable: true, style: "width:265px;", ...qProps }
         return reactive({ dmType: "text", dmAppend: DMSETTINGS.dmInputAppendQuery, qProps: params, value: value })
     },
 
@@ -203,7 +208,8 @@ const DMBTN = {
     edit: { id: 2, label: "msgEdit", color: "primary", icon: "o_edit" },
     confirm: { id: 3, label: "msgConfirm", color: "primary" },
     info: { id: 4, label: "msgInfo", color: "primary", icon: "o_feed" },
-
+    back: { id: 5, label: "msgBack", icon: "arrow_back" },
+    close: { id: 6, label: "msgClose", icon: "close" },
     app_service: { id: 100, label: "msgAppServices", color: "primary", icon: "o_fact_check" },
 
 }

@@ -23,19 +23,18 @@ const props = defineProps({
 })
 </script>
 
-<style scss>
+<style>
 .dm_memu {
-    border-radius: 5px;
+    border-radius: 0px 10px 10px 0px;
 }
 
 .dm_memu:hover {
-    /* color: var(--q-color-primary); */
-    color: #666dff;
+    color: #666DFF;
 }
 
+
 .dm_menu_active {
-    background-color: #666dff;
-    /* background-color: var(--q-color-primary); */
+    background-image:linear-gradient(-90deg,#8D91FF 20%, #666DFF 100%);
     border-radius: 1px;
     color: #FFF;
     font-weight: 800;
