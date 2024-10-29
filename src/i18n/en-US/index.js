@@ -87,7 +87,7 @@ export default {
   msgPnlAccountSecurity: "Account Security",
   msgPnlAccountList: "Account List",
   msgPnlAccountBasicInfo: "Account Information",
-  msgPnlAccountOrg: "Account Organization Info",
+  msgPnlAccountOrg: "Organization Information",
 
   msgPnlOrgCreate: "Create Organization",
   msgPnlOrgEdit: "Edit Organization",

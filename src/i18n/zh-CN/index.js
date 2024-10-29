@@ -87,7 +87,7 @@ export default {
     msgPnlAccountSecurity: "账号安全",
     msgPnlAccountList: "账号列表",
     msgPnlAccountBasicInfo: "账号信息",
-    msgPnlAccountOrg: "账号组织信息",
+    msgPnlAccountOrg: "组织信息",
 
     msgPnlOrgCreate: "新增组织",
     msgPnlOrgEdit: "编辑组织",

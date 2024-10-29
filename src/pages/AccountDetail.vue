@@ -34,14 +34,14 @@
 
         <!-- 组织 -->
         <q-tab-panel name="msgPnlAccountOrg">
-            {{ props.uuid }}
+            <dmTbl v-bind="orgTbl" @query="getOrgsList" />
         </q-tab-panel>
 
 
         <!-- 安全 -->
         <q-tab-panel name="msgPnlAccountSecurity">
             <q-list class="q-mt-md" bordered separator>
-                <q-item>
+                <!-- <q-item>
                     <q-item-section>
                         <q-item-label class="text-negative text-bold">{{$t("msgResetPassword")}}</q-item-label>
                         <q-item-label caption class="text-negative">{{$t("msgResetPassword")}}</q-item-label>
@@ -50,7 +50,7 @@
                     <q-item-section side right>
                             <q-btn no-caps color="negative">{{t("msgAction")}}</q-btn>
                     </q-item-section>
-                </q-item>
+                </q-item> -->
                 <q-item>
                     <q-item-section>
                         <q-item-label class="text-negative text-bold">{{$t("msgPnlAccountDelete")}}</q-item-label>
@@ -89,7 +89,7 @@ import { useRouter } from "vue-router";
 import { useI18n } from "vue-i18n";
 import { onMounted, reactive, ref } from "vue";
 import { DMOBJ,DMTBL,DMINPUT,DMBTN } from "src/base/dm";
-import { modelBase,modelUser } from "src/base/model";
+import { modelBase,modelOrg,modelUser } from "src/base/model";
 import dmTbl from "src/components/dmTbl.vue";
 import dmDialog from "src/components/dmDialog.vue";
 import dmForm from "src/components/dmForm.vue";
@@ -144,6 +144,29 @@ const basicComponent = {
     user_status:DMINPUT.select(modelUser.status),
 }
 
+const orgTbl = reactive({
+    columns:[
+            DMTBL.col("org_name",modelOrg.org_name.label),
+            {
+                ...DMTBL.col("org_status",modelOrg.status.label,modelOrg.status.options),style:row=>{
+                    let sts = modelOrg.status
+                    for(let t in sts.options){
+                        if(sts.options[t].value === row.org_status){
+                            return sts.options[t].style
+                        }
+                    }
+                    return ""
+                },
+            },
+            // DMTBL.col("org_user_status",modelOrg.org_name.label),
+    ],
+    rows:[],
+    pagination:null,
+})
+
+
+
+
 function btnClick(btnID){
     switch(btnID){
         case DMBTN.edit.id:
@@ -187,6 +210,15 @@ function btnClick(btnID){
         default:
             break;
     }
+}
+
+function getOrgsList(pagination){
+    let data = {
+            page_idx:pagination.page,
+            page_size:pagination.rowsPerPage,
+            user_uuid:props.uuid,
+    }
+    dm.dmTblGetList(pagination,orgTbl,"/account/orgs",data)
 }
 
 

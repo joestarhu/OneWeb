@@ -1,7 +1,7 @@
 <template>
     <q-table v-bind="qProps" :rows-per-page-options="rows_per_page_options" :pagination="pagination"
-        v-model:pagination="pagination" @request="onRequest" class="q-pa-md" flat style="border-radius: 10px;">
-        <template v-slot:top>
+        v-model:pagination="pagination" @request="onRequest" flat style="border-radius: 10px;">
+        <template v-if="tblHeaderFlag" v-slot:top>
             <div class="col row q-col-gutter-xs">
                 <dmInput v-for="obj in dmQueryInput" :key="obj" :qProps="obj.qProps" :dmType="obj.dmType" :dmAppend="obj.dmAppend"
                     v-model="obj.value" @update:model-value="onRequest(null)" />
@@ -59,10 +59,9 @@
 </template>
 
 <script setup>
-import { reactive,onMounted} from "vue"
+import { reactive,onMounted,computed} from "vue"
 import { DMSETTINGS} from "src/base/dm"
 import dmInput from "src/components/dmInput.vue"
-
 
 const emit = defineEmits(["btnClick","query"])
 const props = defineProps({
@@ -74,6 +73,12 @@ const props = defineProps({
         dmQueryInput:{ default:[]},
         // 头部操作按钮
         dmHeaderBtn:{default:[]},
+})
+
+const tblHeaderFlag = computed(()=>{
+    // 没有搜索输入框和头部按钮则无需显示头部
+    return Object.keys(props.dmHeaderBtn).length + Object.keys(props.dmQueryInput).length
+    
 })
 
 const rows_per_page_options = [10, 20, 30, 100]

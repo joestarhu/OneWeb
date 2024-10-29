@@ -29,6 +29,38 @@
         </dmDialog>
     </q-dialog>
 
+    <!-- 详情弹窗 -->
+    <q-dialog v-model="infoPnl.show">
+        <dmDialog :title="infoPnl.res.title">
+            <q-splitter v-model="splitterModel" separator-class="transparent">
+                <template #before>
+                    <q-tabs vertical v-model="tab" active-color="primary">
+                        <q-tab name="mails"  label="基础信息" />
+                        <q-tab name="alarms" label="应用信息" />
+                        <q-tab name="movies" label="安全" />
+                    </q-tabs>
+                </template>
+
+                <template #after>
+                    <q-tab-panels v-model="tab" vertical>
+                        <q-tab-panel name="mails">
+                            <dmTbl v-bind="tbl" @btnClick="btnClick" @query="getList"></dmTbl>
+                        </q-tab-panel>
+                        <q-tab-panel name="alarms">
+                            <q-card flat bordered class="text-center">
+                                <p>组织名称:ASDASDADAS</p>
+                            </q-card>
+                        </q-tab-panel>
+                        <q-tab-panel name="movies">
+                            ...
+                        </q-tab-panel>
+                    </q-tab-panels>
+                </template>
+            </q-splitter>
+        </dmDialog>
+    </q-dialog>
+
+
 </q-page>
 </template>
 
@@ -36,7 +68,7 @@
 import { useQuasar } from "quasar";
 import { useRouter } from "vue-router";
 import { useI18n } from "vue-i18n";
-import { reactive } from "vue";
+import { ref,reactive } from "vue";
 import { DMOBJ,DMTBL,DMINPUT,DMBTN } from "src/base/dm";
 import { modelBase,modelUser,modelOrg } from "src/base/model";
 import dmTbl from "src/components/dmTbl.vue";
@@ -48,10 +80,14 @@ const dm = new DMOBJ(useQuasar(),useRouter());
 const {t} = useI18n();
 
 
+let tab = ref("mails");
+const splitterModel = 10;
+
 const actRes = {
     create: { title: "msgPnlOrgCreate", url: "/org/create" },
     edit: { title: "msgPnlOrgEdit", url: "/org/update" },
     delete: { title: "msgPnlOrgDelete", url: "/org/delete" },
+    info:{title:"msgPnlOrgInfo",url:""},
 }
 
 // 操作资源(请求地址和操作弹窗Title)
@@ -60,6 +96,12 @@ const actPnl = reactive({
     loading: false,
     res: actRes.create,
     data: null,
+})
+
+// info弹窗
+const infoPnl = reactive({
+    show:false,
+    res: actRes.info,
 })
 
 const detailPnl = {
@@ -128,6 +170,9 @@ function btnClick(btnID, props = null){
             actPnl.loading = false;
             actPnl.res = actRes.delete;
             actPnl.data = props.row;
+            break;
+        case DMBTN.info.id:
+            infoPnl.show =true;
             break;
         case DMBTN.confirm.id:
             break;

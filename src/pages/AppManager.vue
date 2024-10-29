@@ -1,6 +1,32 @@
 <template>
 <q-page padding>
+    <!-- 应用列表界面 -->
     <dmTbl v-bind="tbl" @btnClick="btnClick" @query="getList"></dmTbl>
+
+    <!-- 应用详情界面 -->
+    <q-dialog persistent v-model="infoPnl.show">
+        <dmDialog :title="infoPnl.res.title" class="full-width full-height">
+            <q-splitter v-model="splitter_value" class="q-pa-md">  
+                <template #before>
+                    <q-tabs vertical v-model="detail_tabs.value" dense activeColor="primary">
+                        <q-tab v-for="obj in detail_tabs.tabs" :key="obj" :name="obj.name" :label="obj.label"></q-tab>
+                    </q-tabs>
+                </template>
+                <template #after>
+                        <q-tab-panels v-model="detail_tabs.value">
+                            <q-tab-panel name="a">
+                                <AppDetail></AppDetail>
+                            </q-tab-panel>
+                            <q-tab-panel name="b">
+                                B
+                            </q-tab-panel>
+                        </q-tab-panels>
+                </template>
+            </q-splitter>
+        </dmDialog>
+    </q-dialog>
+
+
 </q-page>
 </template>
 
@@ -11,11 +37,41 @@ import { useI18n } from "vue-i18n";
 import { reactive } from 'vue';
 import { DMOBJ,DMTBL,DMINPUT,DMBTN } from "src/base/dm";
 import { modelBase,modelApp } from "src/base/model";
+import dmDialog from "src/components/dmDialog.vue";
 import dmTbl from 'src/components/dmTbl.vue';
 import dmInput from "src/components/dmInput.vue";
+import AppDetail from "./AppDetail.vue";
 
 const dm = new DMOBJ(useQuasar(),useRouter());
 const { t } = useI18n()
+
+
+const splitter_value = 10
+
+
+const detail_tabs =reactive({
+    tabs:[
+        {name:"a",label:"a"},
+        {name:"b",label:"b"},
+    ],
+    value:"a",
+})
+
+
+
+const actRes = {
+    // create: { title: "msgPnlOrgCreate", url: "/org/create" },
+    // edit: { title: "msgPnlOrgEdit", url: "/org/update" },
+    // delete: { title: "msgPnlOrgDelete", url: "/org/delete" },
+    info:{title:"msgPnlAppInfo",url:""},
+}
+
+// info弹窗
+const infoPnl = reactive({
+    show:false,
+    res: actRes.info,
+})
+
 
 
 const tbl = reactive({
@@ -23,7 +79,7 @@ const tbl = reactive({
         app_name:DMINPUT.text_query(modelApp.app_name),
         app_status:DMINPUT.select_query(modelApp.status),
     },
-    dmHeaderBtn:[DMBTN.create],
+    // dmHeaderBtn:[DMBTN.create],
     dmRowBtn:[DMBTN.info],
     rows: [],
     pagination: null,
@@ -49,6 +105,13 @@ const tbl = reactive({
 
 
 function btnClick(btnID,props=null){
+    switch(btnID){
+        case DMBTN.info.id:
+            infoPnl.show=true
+            break;
+        default:
+            break;
+    }
     
 }
 

@@ -9,7 +9,7 @@ const routes = [
       // { path: '/account', component: () => import('src/pages/AccountList.vue') },
       { path: '/org', component: () => import('src/pages/OrgManager.vue') },
       { path: '/role', component: () => import('src/pages/RoleManager.vue') },
-      { path: '/app', component: () => import('src/pages/AppContainer.vue') },
+      { path: '/app', component: () => import('src/pages/AppManager.vue') },
     ]
   },
   {
