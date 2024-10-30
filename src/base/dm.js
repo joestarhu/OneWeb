@@ -147,6 +147,9 @@ class DMOBJ {
             tbl.pagination = pagination
         }
 
+        // 自定义的
+        data = { ...data, page_idx: pagination.page, page_size: pagination.rowsPerPage }
+
         // 获取数据
         this.get(url, data, tbl,
             (rsp) => {

@@ -22,6 +22,7 @@ export default {
   // D
   msgDelete: "Delete",
   msgDeleteWarning: "will be deleted,once deleted there is no going back.Please be certain",
+  msgDrangerDeleteMsg: "Please input delete",
   msgDisable: "Disable",
   // E
   msgEdit: "Edit",
@@ -93,6 +94,8 @@ export default {
   msgPnlOrgEdit: "Edit Organization",
   msgPnlOrgDelete: "Delete Organization",
   msgPnlOrgInfo: "Organization Info",
+  msgPnlOrgList: "Organization List",
 
   msgPnlAppInfo: "Application Info",
+  msgPnlAppList: "Application List",
 }

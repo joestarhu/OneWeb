@@ -1,10 +1,36 @@
 <template>
 <q-page padding>
-    <!-- 应用列表界面 -->
-    <dmTbl v-bind="tbl" @btnClick="btnClick" @query="getList"></dmTbl>
+    <dmManager title="msgPnlAppList" :showDetail="infoPnl.show" @click="btnClick">
+        <template #list>
+            <dmTbl v-bind="tbl" @btnClick="btnClick" @query="getList" />
+        </template>
+
+        <template #detail>
+            <AppDetail :app_id="infoPnl.app_id"></AppDetail>
+        </template>
+    </dmManager>
+
+
+
+    <!-- <div v-if="!infoPnl.show">
+        <dmTbl v-bind="tbl" @btnClick="btnClick" @query="getList" />
+    </div>
+
+     <div v-else>
+        <q-btn no-caps dense flat :icon="DMBTN.back.icon" @click="btnClick(DMBTN.back.id)">{{ $t("msgPnlAppList") }}</q-btn>
+        <q-card flat class="q-mt-sm">
+            <q-card-section> 
+                <AppDetail></AppDetail>
+            </q-card-section>
+        </q-card>
+     </div> -->
+
+
+    
+    
 
     <!-- 应用详情界面 -->
-    <q-dialog persistent v-model="infoPnl.show">
+    <!-- <q-dialog persistent v-model="infoPnl.show">
         <dmDialog :title="infoPnl.res.title" class="full-width full-height">
             <q-splitter v-model="splitter_value" class="q-pa-md">  
                 <template #before>
@@ -24,7 +50,7 @@
                 </template>
             </q-splitter>
         </dmDialog>
-    </q-dialog>
+    </q-dialog> -->
 
 
 </q-page>
@@ -40,21 +66,19 @@ import { modelBase,modelApp } from "src/base/model";
 import dmDialog from "src/components/dmDialog.vue";
 import dmTbl from 'src/components/dmTbl.vue';
 import dmInput from "src/components/dmInput.vue";
+import dmManager from "src/components/dmManager.vue";
 import AppDetail from "./AppDetail.vue";
+
 
 const dm = new DMOBJ(useQuasar(),useRouter());
 const { t } = useI18n()
 
 
-const splitter_value = 10
 
 
-const detail_tabs =reactive({
-    tabs:[
-        {name:"a",label:"a"},
-        {name:"b",label:"b"},
-    ],
-    value:"a",
+const infoPnl = reactive({
+    show:false,
+    app_id:0,
 })
 
 
@@ -65,12 +89,6 @@ const actRes = {
     // delete: { title: "msgPnlOrgDelete", url: "/org/delete" },
     info:{title:"msgPnlAppInfo",url:""},
 }
-
-// info弹窗
-const infoPnl = reactive({
-    show:false,
-    res: actRes.info,
-})
 
 
 
@@ -108,6 +126,10 @@ function btnClick(btnID,props=null){
     switch(btnID){
         case DMBTN.info.id:
             infoPnl.show=true
+            infoPnl.app_id = props.row.id
+            break;
+        case DMBTN.back.id:
+            infoPnl.show=false;
             break;
         default:
             break;
@@ -117,8 +139,6 @@ function btnClick(btnID,props=null){
 
 function getList(pagination){
     let data = {
-        page_idx:pagination.page,
-        page_size:pagination.rowsPerPage,
         app_name:tbl.dmQueryInput.app_name.value,
         app_status:tbl.dmQueryInput.app_status.value
     }

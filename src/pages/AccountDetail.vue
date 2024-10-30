@@ -34,13 +34,13 @@
 
         <!-- 组织 -->
         <q-tab-panel name="msgPnlAccountOrg">
-            <dmTbl v-bind="orgTbl" @query="getOrgsList" />
+            <dmTbl v-bind="orgTbl" @query="getOrgsList"/>
         </q-tab-panel>
 
 
         <!-- 安全 -->
         <q-tab-panel name="msgPnlAccountSecurity">
-            <q-list class="q-mt-md" bordered separator>
+            <q-list bordered separator>
                 <!-- <q-item>
                     <q-item-section>
                         <q-item-label class="text-negative text-bold">{{$t("msgResetPassword")}}</q-item-label>
@@ -54,7 +54,9 @@
                 <q-item>
                     <q-item-section>
                         <q-item-label class="text-negative text-bold">{{$t("msgPnlAccountDelete")}}</q-item-label>
-                        <q-item-label caption class="text-negative">{{$t("msgAccountDelete")}}</q-item-label>
+                        <q-item-label caption class="text-negative">
+                            <span class="text-warning text-bold">{{ basicInfo.fields.account.value }} </span> {{ t("msgDeleteWarning") }}
+                        </q-item-label>
                     </q-item-section>
 
                     <q-item-section side right>
@@ -75,7 +77,7 @@
                 <dmInput v-for="obj of basicComponent" :key="obj" :qProps="obj.qProps" :dmType="obj.dmType" :dmAppend="obj.dmAppend" v-model="obj.value" />
             </div>
             <div v-if="actPnl.res.title === 'msgPnlAccountDelete'">
-                {{t("msgAccount")}}:<span class="text-warning text-bold">  {{ basicInfo.fields.account.value }} </span> {{ t("msgDeleteWarning") }}
+                <q-input dense flat :hint="$t('msgDrangerDeleteMsg')" :rules="[val => val && val.toString() ==='delete' || $t('msgDrangerDeleteMsg')]" v-model="actPnl.data"></q-input>
             </div>
         </dmForm>
     </dmDialog>
@@ -87,7 +89,7 @@
 import { useQuasar } from "quasar";
 import { useRouter } from "vue-router";
 import { useI18n } from "vue-i18n";
-import { onMounted, reactive, ref } from "vue";
+import { computed, onMounted, reactive, ref } from "vue";
 import { DMOBJ,DMTBL,DMINPUT,DMBTN } from "src/base/dm";
 import { modelBase,modelOrg,modelUser } from "src/base/model";
 import dmTbl from "src/components/dmTbl.vue";
@@ -97,7 +99,7 @@ import dmInput from "src/components/dmInput.vue";
 
 // 界面属性
 const props = defineProps({
-    uuid:{required:true,type:String},
+    user_uuid:{required:true,type:String},
 })
 const emit = defineEmits(['close']);
 
@@ -145,6 +147,7 @@ const basicComponent = {
 }
 
 const orgTbl = reactive({
+    loading:false,
     columns:[
             DMTBL.col("org_name",modelOrg.org_name.label),
             {
@@ -178,15 +181,16 @@ function btnClick(btnID){
         case DMBTN.delete.id:
             actPnl.show = true;
             actPnl.res = actRes.delete;
+            actPnl.data = "";
             break;
         case DMBTN.confirm.id:
             let requestData = null
             switch(actPnl.res.title){
                 case actRes.edit.title:
-                    requestData = {user_uuid:props.uuid,nick_name:basicComponent.nick_name.value, user_status:basicComponent.user_status.value}
+                    requestData = {user_uuid:props.user_uuid,nick_name:basicComponent.nick_name.value, user_status:basicComponent.user_status.value}
                     break;
                 case actRes.delete.title:
-                    requestData = {user_uuid:props.uuid}
+                    requestData = {user_uuid:props.user_uuid}
                     break;
                 default:
                     break;
@@ -200,7 +204,7 @@ function btnClick(btnID){
                     if(actPnl.res.title === actRes.delete.title){
                         emit("close")
                     }else{
-                        getDetail(props.uuid)
+                        getDetail(props.user_uuid)
                     }
                 },
                 null
@@ -214,9 +218,7 @@ function btnClick(btnID){
 
 function getOrgsList(pagination){
     let data = {
-            page_idx:pagination.page,
-            page_size:pagination.rowsPerPage,
-            user_uuid:props.uuid,
+            user_uuid:props.user_uuid,
     }
     dm.dmTblGetList(pagination,orgTbl,"/account/orgs",data)
 }
@@ -257,7 +259,7 @@ function getDetail(user_uuid){
 }
 
 onMounted(()=>{
-    getDetail(props.uuid)
+    getDetail(props.user_uuid)
 })
 
 </script>

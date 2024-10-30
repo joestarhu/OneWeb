@@ -1,8 +1,6 @@
 <template>
 <q-page padding>
-    <!-- 数据显示 -->
-    <dmTbl v-bind="tbl" @btnClick="btnClick" @query="getList"></dmTbl>
-
+    <dmTbl v-bind="tbl" @btnClick="btnClick" @query="getList" />
 </q-page>
 </template>
 
@@ -14,9 +12,6 @@ import { reactive } from "vue";
 import { DMOBJ,DMTBL,DMINPUT,DMBTN } from "src/base/dm";
 import { modelBase,modelUser,modelRole } from "src/base/model";
 import dmTbl from "src/components/dmTbl.vue";
-import DmDialog from "src/components/dmDialog.vue";
-import dmForm from "src/components/dmForm.vue";
-import dmInput from "src/components/dmInput.vue";
 
 const dm = new DMOBJ(useQuasar(), useRouter())
 const { t } = useI18n()

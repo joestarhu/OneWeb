@@ -32,7 +32,6 @@ const props = defineProps({
     color: #666DFF;
 }
 
-
 .dm_menu_active {
     background-image:linear-gradient(-90deg,#8D91FF 20%, #666DFF 100%);
     border-radius: 1px;

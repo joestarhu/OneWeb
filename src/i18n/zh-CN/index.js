@@ -21,6 +21,7 @@ export default {
     // D
     msgDelete: "删除",
     msgDeleteWarning: "将被删除,删除后数据将无法恢复.请确认",
+    msgDrangerDeleteMsg: "请输入delete",
     msgDisable: "停用",
     // E
     msgEdit: "编辑",
@@ -93,6 +94,8 @@ export default {
     msgPnlOrgEdit: "编辑组织",
     msgPnlOrgDelete: "删除组织",
     msgPnlOrgInfo: "组织详情",
+    msgPnlOrgList: "组织列表",
 
     msgPnlAppInfo: "应用详情",
+    msgPnlAppList: "应用列表",
 }

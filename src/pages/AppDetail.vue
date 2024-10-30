@@ -1,5 +1,5 @@
 <template>
-    welcome to app detail;
+    <dmTbl v-bind="appSericesTbl" @query="getAppServicesList"></dmTbl>
 </template>
 
 <script setup lang="js">
@@ -15,7 +15,28 @@ import dmForm from "src/components/dmForm.vue";
 import dmInput from "src/components/dmInput.vue";
 
 const dm = new DMOBJ(useQuasar(),useRouter())
+const props = defineProps({
+    app_id:{type:Number,required:true},
+})
 
+const appSericesTbl = reactive({
+    columns:[
+        DMTBL.col("service_name","msgAccount"),
+        DMTBL.col("service_tag","msgAccount"),
+    ],
+    rows:[],
+    pagination:null,
+})
+
+
+function getAppServicesList(pagination){
+    let data = {
+            page_idx:pagination.page,
+            page_size:pagination.rowsPerPage,
+            app_id:props.app_id,
+    }
+    dm.dmTblGetList(pagination,appSericesTbl,"/app/service_list",data)
+}
 
 
 
@@ -23,7 +44,3 @@ const dm = new DMOBJ(useQuasar(),useRouter())
 
 
 </script>
-
-<style>
-
-</style>

@@ -1,20 +1,14 @@
 <template>
 <q-page padding>
-    <!-- 列表 -->
-    <div v-show="!infoPnl.show">
-        <dmTbl v-bind="tbl" @btnClick="btnClick" @query="getList"></dmTbl>
-    </div>
-
-    <!-- 详情 -->
-    <div v-if="infoPnl.show">
-        <q-btn no-caps dense flat :icon="DMBTN.back.icon" @click="btnClick(DMBTN.back.id)">{{ $t("msgPnlAccountList") }}</q-btn>
-        <q-card flat class="q-mt-sm">
-            <q-card-section> 
-                <AccountDetail :uuid="infoPnl.uuid" @close="btnClick(DMBTN.back.id)"></AccountDetail>
-            </q-card-section>
-        </q-card>
-    </div>
-
+    <dmManager title="msgPnlAccountList" :showDetail="infoPnl.show" @click="btnClick">
+        <template #list>
+            <dmTbl v-bind="tbl" @btnClick="btnClick" @query="getList"></dmTbl>
+        </template>
+        <template #detail>
+            <AccountDetail :user_uuid="infoPnl.user_uuid" @close="btnClick(DMBTN.back.id)"></AccountDetail>
+        </template>
+    </dmManager>
+    
     <!-- 弹窗界面(新增) -->
     <q-dialog persistent v-model="actPnl.show">
         <dmDialog :title="actPnl.res.title">
@@ -33,6 +27,7 @@ import { useI18n } from "vue-i18n";
 import { onMounted, reactive } from "vue";
 import { DMOBJ,DMTBL,DMINPUT,DMBTN } from "src/base/dm";
 import { modelBase,modelUser } from "src/base/model";
+import dmManager from "src/components/dmManager.vue";
 import dmTbl from "src/components/dmTbl.vue";
 import dmDialog from "src/components/dmDialog.vue";
 import dmForm from "src/components/dmForm.vue";
@@ -94,7 +89,7 @@ const actComponent ={
 
 const infoPnl = reactive({
     show:false,
-    uuid:""
+    user_uuid:""
 })
 
 
@@ -108,8 +103,6 @@ function accountCreateInit(){
 function getList(pagination){
     let inputValue = tbl.dmQueryInput
     let data = {
-            page_idx:pagination.page,
-            page_size:pagination.rowsPerPage,
             account:inputValue.account.value,
             phone: inputValue.phone.value,
             nick_name: inputValue.nick_name.value,
@@ -118,9 +111,9 @@ function getList(pagination){
     dm.dmTblGetList(pagination,tbl,"/account/list",data)
 }
 
-function accountShowDetail(uuid){
+function accountShowDetail(user_uuid){
     infoPnl.show=true
-    infoPnl.uuid = uuid
+    infoPnl.user_uuid = user_uuid
 }
 
 function btnClick(btnID, props=null){

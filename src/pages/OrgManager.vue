@@ -1,66 +1,22 @@
 <template>
 <q-page padding>
-    <!-- 数据展示table -->
-     <dmTbl v-bind="tbl" @btnClick="btnClick" @query="getList"></dmTbl>
+    <dmManager title="msgPnlOrgList" :showDetail="infoPnl.show" @click="btnClick">
+        <template #list>
+            <dmTbl v-bind="tbl" @btnClick="btnClick" @query="getList"></dmTbl>
+        </template>
+    </dmManager>
 
-    <!-- 弹窗 -->
+    <!-- 新增 -->
     <q-dialog persistent v-model="actPnl.show">
         <dmDialog :title="actPnl.res.title">
             <dmForm @submit="btnClick(DMBTN.confirm.id)" :btnLoading="actPnl.res.loading">
-                <div v-if="actPnl.res.title == actRes.delete.title">
-                    {{t("msgOrg")}}:<span class="text-warning text-bold">{{  actPnl.data.org_name }}</span> {{ t("msgDeleteWarning") }}
-                </div>
-                <div v-else>
-                    <div v-if="actPnl.loading">
-                        <q-skeleton v-for="obj of detailPnl" :key="obj" class="q-mb-md" type="QInput"></q-skeleton>
-                    </div>
-                    <div v-else>
-                        <dmInput v-for="obj of detailPnl" 
+                <dmInput v-for="obj of detailPnl" 
                         :key="obj" :qProps="obj.qProps" :dmType="obj.dmType" :dmAppend="obj.dmAppend" v-model="obj.value"
                         @filter="(val, update, abort) => filter(val, update, abort, obj.qProps)">
                         </dmInput>
-                    </div>
-                </div>
-
-                <template #right_btn v-if="actPnl.loading">
-                    <q-skeleton type="QBtn"></q-skeleton>
-                </template>
             </dmForm>
         </dmDialog>
     </q-dialog>
-
-    <!-- 详情弹窗 -->
-    <q-dialog v-model="infoPnl.show">
-        <dmDialog :title="infoPnl.res.title">
-            <q-splitter v-model="splitterModel" separator-class="transparent">
-                <template #before>
-                    <q-tabs vertical v-model="tab" active-color="primary">
-                        <q-tab name="mails"  label="基础信息" />
-                        <q-tab name="alarms" label="应用信息" />
-                        <q-tab name="movies" label="安全" />
-                    </q-tabs>
-                </template>
-
-                <template #after>
-                    <q-tab-panels v-model="tab" vertical>
-                        <q-tab-panel name="mails">
-                            <dmTbl v-bind="tbl" @btnClick="btnClick" @query="getList"></dmTbl>
-                        </q-tab-panel>
-                        <q-tab-panel name="alarms">
-                            <q-card flat bordered class="text-center">
-                                <p>组织名称:ASDASDADAS</p>
-                            </q-card>
-                        </q-tab-panel>
-                        <q-tab-panel name="movies">
-                            ...
-                        </q-tab-panel>
-                    </q-tab-panels>
-                </template>
-            </q-splitter>
-        </dmDialog>
-    </q-dialog>
-
-
 </q-page>
 </template>
 
@@ -75,19 +31,18 @@ import dmTbl from "src/components/dmTbl.vue";
 import dmDialog from "src/components/dmDialog.vue";
 import dmForm from "src/components/dmForm.vue";
 import dmInput from "src/components/dmInput.vue";
+import dmManager from "src/components/dmManager.vue";
 
 const dm = new DMOBJ(useQuasar(),useRouter());
 const {t} = useI18n();
 
-
-let tab = ref("mails");
-const splitterModel = 10;
+const infoPnl = reactive({
+    show:false,
+    org_uuid:"",
+})
 
 const actRes = {
     create: { title: "msgPnlOrgCreate", url: "/org/create" },
-    edit: { title: "msgPnlOrgEdit", url: "/org/update" },
-    delete: { title: "msgPnlOrgDelete", url: "/org/delete" },
-    info:{title:"msgPnlOrgInfo",url:""},
 }
 
 // 操作资源(请求地址和操作弹窗Title)
@@ -96,12 +51,6 @@ const actPnl = reactive({
     loading: false,
     res: actRes.create,
     data: null,
-})
-
-// info弹窗
-const infoPnl = reactive({
-    show:false,
-    res: actRes.info,
 })
 
 const detailPnl = {
@@ -152,30 +101,46 @@ function detailInit(){
 function btnClick(btnID, props = null){
     switch(btnID){
         case DMBTN.create.id:
+            detailInit();
             actPnl.show = true;
             actPnl.loading = false;
             actPnl.res = actRes.create;
-            actPnl.data = props.row;
-            detailInit();
             break;
-        case DMBTN.edit.id:
-            actPnl.show = true;
-            actPnl.loading = true;
-            actPnl.res = actRes.edit;
-            actPnl.data = props.row;
-            getDetail(props.row.org_uuid);
-            break;
-        case DMBTN.delete.id:
-            actPnl.show = true;
-            actPnl.loading = false;
-            actPnl.res = actRes.delete;
-            actPnl.data = props.row;
-            break;
+        // case DMBTN.edit.id:
+        //     actPnl.show = true;
+        //     actPnl.loading = true;
+        //     actPnl.res = actRes.edit;
+        //     actPnl.data = props.row;
+        //     getDetail(props.row.org_uuid);
+        //     break;
+        // case DMBTN.delete.id:
+        //     actPnl.show = true;
+        //     actPnl.loading = false;
+        //     actPnl.res = actRes.delete;
+        //     actPnl.data = props.row;
+        //     break;
         case DMBTN.info.id:
             infoPnl.show =true;
             break;
         case DMBTN.confirm.id:
+            let requestData = {
+                org_name:detailPnl.org_name.value,
+                owner_uuid:detailPnl.user_uuid.value,
+                org_remark:detailPnl.org_remark.value,
+                org_status:detailPnl.org_status.value
+            }
+
+            dm.post(actPnl.res.url, requestData, actPnl,
+                (rsp)=>{
+                    dm.msgOK({ message: t('msgSuccess') })
+                    getList(tbl.pagination)
+                    actPnl.show = false
+                },
+                null
+            );
             break;
+        case DMBTN.back.id:
+            infoPnl.show=false;
         default:break;
     }
 }
@@ -183,8 +148,6 @@ function btnClick(btnID, props = null){
 
 function getList(pagination){
     let data = {
-        page_idx:pagination.page,
-        page_size:pagination.rowsPerPage,
         org_name:tbl.dmQueryInput.org_name.value,
         org_status:tbl.dmQueryInput.status.value,
     };

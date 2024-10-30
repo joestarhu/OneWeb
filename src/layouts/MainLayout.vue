@@ -44,15 +44,22 @@ const dm = new DMOBJ(useQuasar(),useRouter())
 const leftDrawerOpen = ref(false)
 
 const menuList = reactive({
-  one:{
+  oneManager:{
     title:"",
     children:[
       {title:"msgMenuAccount",to:"/account",icon:"o_person"},
-      {title:"msgMenuOrg",to:"/org",icon:"o_corporate_fare"},
       {title:"msgMenuRole",to:"/role",icon:"o_contact_emergency"},
       {title:"msgMenuApp",to:"/app",icon:"o_widgets"},
+      {title:"msgMenuOrg",to:"/org",icon:"o_corporate_fare"},
     ]
   },
+  // one:{
+  //   title:"",
+  //   children:[
+  //     {title:"msgAccount",to:"/role",icon:"o_contact_emergency"},      
+  //   ]
+  // }
+
 })
 </script>
 
