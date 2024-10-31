@@ -1,7 +1,14 @@
 <template>
 <q-page padding>
-    <dmTbl v-bind="tbl" @btnClick="btnClick" @query="getList" />
-</q-page>
+    <dmManager @click="btnClick" :showDetail="infoPnl.show" title="msgPnlRoleList">
+        <template #list>
+            <dmTbl v-bind="tbl" @btnClick="btnClick" @query="getList" />
+        </template>
+        <template #detail>
+            <RoleDetail :role_id="infoPnl.role_id"></RoleDetail>
+        </template>
+    </dmManager>
+</q-page>    
 </template>
 
 <script setup lang="js">
@@ -12,9 +19,16 @@ import { reactive } from "vue";
 import { DMOBJ,DMTBL,DMINPUT,DMBTN } from "src/base/dm";
 import { modelBase,modelUser,modelRole } from "src/base/model";
 import dmTbl from "src/components/dmTbl.vue";
+import dmManager from "src/components/dmManager.vue";
+import RoleDetail from "./RoleDetail.vue";
 
 const dm = new DMOBJ(useQuasar(), useRouter())
 const { t } = useI18n()
+
+const infoPnl = reactive({
+    show:false,
+    role_id:null,
+})
 
 const tbl = reactive({
     dmQueryInput:{
@@ -22,7 +36,7 @@ const tbl = reactive({
         role_status:DMINPUT.select_query(modelRole.status),
     },
     dmHeaderBtn:[DMBTN.create],
-    dmRowBtn:[DMBTN.edit, DMBTN.delete],
+    dmRowBtn:[DMBTN.info,DMBTN.edit, DMBTN.delete],
     rows: [],
     pagination: null,
     columns:[
@@ -47,6 +61,17 @@ const tbl = reactive({
 
 
 function btnClick(btnID,props=null){
+    switch(btnID){
+        case DMBTN.info.id:
+            infoPnl.show = true;
+            infoPnl.role_id = props.row.id
+            break;
+        case DMBTN.back.id:
+            infoPnl.show=false
+            break;
+        default:
+            break;
+    }
 }
 
 function getList(pagination){

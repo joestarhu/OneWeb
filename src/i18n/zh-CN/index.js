@@ -9,6 +9,8 @@ export default {
     msgAction: "操作",
     msgAppName: "应用名称",
     msgAppServices: "应用服务",
+    msgAppServiceName: "应用服务名称",
+    msgAppServiceTag: "应用服务标识",
     // B
     msgBasicInfo: "基础信息",
     // C
@@ -89,6 +91,8 @@ export default {
     msgPnlAccountList: "账号列表",
     msgPnlAccountBasicInfo: "账号信息",
     msgPnlAccountOrg: "组织信息",
+
+    msgPnlRoleList: "角色列表",
 
     msgPnlOrgCreate: "新增组织",
     msgPnlOrgEdit: "编辑组织",

@@ -9,6 +9,8 @@ export default {
   msgAction: "Action",
   msgAppName: "Application Name",
   msgAppServices: "Application Services",
+  msgAppServiceName: "Service Name",
+  msgAppServiceTag: "Service Tag",
   // B
   msgBasicInfo: "Basic Information",
   // C
@@ -89,6 +91,8 @@ export default {
   msgPnlAccountList: "Account List",
   msgPnlAccountBasicInfo: "Account Information",
   msgPnlAccountOrg: "Organization Information",
+
+  msgPnlRoleList: "Role List",
 
   msgPnlOrgCreate: "Create Organization",
   msgPnlOrgEdit: "Edit Organization",

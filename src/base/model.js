@@ -39,6 +39,8 @@ const modelRole = {
 const modelApp = {
     app_name: { label: "msgAppName" },
     app_remark: { label: "msgRemark" },
+    service_name: { label: "msgAppServiceName" },
+    service_tag: { label: "msgAppServiceTag" },
     status: { label: "msgStatus", options: [{ label: "启用", value: 1, style: dmSTYLE.enable }, { label: "停用", value: 0, style: dmSTYLE.disable },] },
 }
 
