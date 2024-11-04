@@ -95,7 +95,7 @@ const actRes = {
 const tbl = reactive({
     dmQueryInput:{
         app_name:DMINPUT.text_query(modelApp.app_name),
-        app_status:DMINPUT.select_query(modelApp.status),
+        app_status:DMINPUT.select_query(modelApp.app_status),
     },
     // dmHeaderBtn:[DMBTN.create],
     dmRowBtn:[DMBTN.info],
@@ -107,8 +107,8 @@ const tbl = reactive({
         DMTBL.col("updated_at", modelBase.updated_at.label),
         DMTBL.col("created_at", modelBase.created_at.label),
         {
-            ...DMTBL.col("app_status", modelApp.status.label, modelApp.status.options), style: row => {
-                let sts = modelApp.status
+            ...DMTBL.col("app_status", modelApp.app_status.label, modelApp.app_status.options), style: row => {
+                let sts = modelApp.app_status
                 for (let t in sts.options) {
                     if (sts.options[t].value == row.app_status) {
                         return sts.options[t].style

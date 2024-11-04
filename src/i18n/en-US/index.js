@@ -52,6 +52,7 @@ export default {
   msgOrgChoose: "Please choose an organization",
   msgOrgName: "Organization Name",
   msgOrgOwnerName: "Owner",
+  msgOrgStatus: "Organization Status",
   // P
   msgPassword: "Password",
   msgPhone: "Phone",

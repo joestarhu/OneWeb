@@ -24,15 +24,15 @@ const modelUser = {
 const modelOrg = {
     org_name: { label: "msgOrgName" },
     owner_name: { label: "msgOrgOwnerName" },
-    remark: { label: "msgRemark" },
-    status: { label: "msgStatus", options: [{ label: "启用", value: 1, style: dmSTYLE.enable }, { label: "停用", value: 0, style: dmSTYLE.disable },] },
+    org_remark: { label: "msgRemark" },
+    org_status: { label: "msgOrgStatus", options: [{ label: "启用", value: 1, style: dmSTYLE.enable }, { label: "停用", value: 0, style: dmSTYLE.disable },] },
 }
 
 // 角色信息
 const modelRole = {
     role_name: { label: "msgRoleName" },
     role_remark: { label: "msgRemark" },
-    status: { label: "msgStatus", options: [{ label: "启用", value: 1, style: dmSTYLE.enable }, { label: "停用", value: 0, style: dmSTYLE.disable },] },
+    role_status: { label: "msgStatus", options: [{ label: "启用", value: 1, style: dmSTYLE.enable }, { label: "停用", value: 0, style: dmSTYLE.disable },] },
 }
 
 // 应用信息
@@ -41,7 +41,7 @@ const modelApp = {
     app_remark: { label: "msgRemark" },
     service_name: { label: "msgAppServiceName" },
     service_tag: { label: "msgAppServiceTag" },
-    status: { label: "msgStatus", options: [{ label: "启用", value: 1, style: dmSTYLE.enable }, { label: "停用", value: 0, style: dmSTYLE.disable },] },
+    app_status: { label: "msgStatus", options: [{ label: "启用", value: 1, style: dmSTYLE.enable }, { label: "停用", value: 0, style: dmSTYLE.disable },] },
 }
 
 export { modelBase, modelUser, modelOrg, modelRole, modelApp }

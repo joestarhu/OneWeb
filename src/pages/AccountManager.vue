@@ -13,12 +13,12 @@
             <q-tab-panels v-model="tabs.value">
                 <!-- 基础信息 -->
                 <q-tab-panel name="msgPnlAccountBasicInfo">
-                    <AccountDetailBasic :user_uuid="infoPnl.user_uuid" @close="btnClick(DMBTN.back.id)"></AccountDetailBasic>
+                    <AccountDetailBasic :user_uuid="infoPnl.user_uuid" @close="btnClick(DMBTN.back.id)" />
                 </q-tab-panel>
 
                 <!-- 组织信息 -->
                 <q-tab-panel name="msgPnlAccountOrg">
-                    T.B.D
+                    <AccountDetailOrg :user_uuid="infoPnl.user_uuid"/>
                 </q-tab-panel>
             </q-tab-panels>
 
@@ -48,8 +48,8 @@ import dmTbl from "src/components/dmTbl.vue";
 import dmDialog from "src/components/dmDialog.vue";
 import dmForm from "src/components/dmForm.vue";
 import dmInput from "src/components/dmInput.vue";
-import AccountDetail from "./AccountDetail.vue";
 import AccountDetailBasic from "./AccountDetailBasic.vue";
+import AccountDetailOrg from "./AccountDetailOrg.vue";
 
 const dm = new DMOBJ(useQuasar(),useRouter());
 const {t} = useI18n();

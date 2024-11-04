@@ -13,23 +13,54 @@
 
         <!-- 基础 -->
         <q-tab-panel name="msgPnlAccountBasicInfo">
-            <span>{{$t("msgBasicInfo")}}</span>
-            <q-btn color="primary" icon="edit" flat dense size="0.7rem" @click="btnClick(DMBTN.edit.id)"></q-btn>
-
-            <q-list>
+            <div class="q-mx-md">
+                <span class="text-h6">{{$t("msgBasicInfo")}}</span>
+                <q-btn color="primary" icon="edit" flat dense size="0.7rem" @click="btnClick(DMBTN.edit.id)"></q-btn>
+                <q-list bordered>
                 <q-item v-for="obj of basicInfo.fields" :key="obj">
                     <q-item-section>
                         <q-item-label class="text-grey">
-                            {{ t(obj.label) }}:
+                            {{ $t(obj.label) }}:
                         </q-item-label>
                         <q-item-label>
                             <q-skeleton type="rect" v-if="basicInfo.loading" />
                             <span :style="obj.style" v-else>{{ obj.value_label || obj.value }}</span>
                         </q-item-label>
-                        
                     </q-item-section>
                 </q-item>
-            </q-list>            
+            </q-list>
+            </div>
+
+
+
+            <div class="q-mx-md q-mt-lg">
+                <span class="text-h6">{{$t("msgPnlAccountSecurity")}}</span>
+            <q-list bordered separator>
+                <!-- <q-item>
+                    <q-item-section>
+                        <q-item-label class="text-negative text-bold">{{$t("msgResetPassword")}}</q-item-label>
+                        <q-item-label caption class="text-negative">{{$t("msgResetPassword")}}</q-item-label>
+                    </q-item-section>
+
+                    <q-item-section side right>
+                            <q-btn no-caps color="negative">{{t("msgAction")}}</q-btn>
+                    </q-item-section>
+                </q-item> -->
+                <q-item>
+                    <q-item-section>
+                        <q-item-label class="text-negative text-bold">{{$t("msgPnlAccountDelete")}}</q-item-label>
+                        <q-item-label caption class="text-negative">
+                            <span class="text-warning text-bold">{{ basicInfo.fields.account.value }} </span> {{ t("msgDeleteWarning") }}
+                        </q-item-label>
+                    </q-item-section>
+
+                    <q-item-section side right>
+                        <q-btn no-caps color="negative" :label="t('msgDelete')" @click="btnClick(DMBTN.delete.id)"/>
+                    </q-item-section>
+                </q-item>
+            </q-list>
+        </div>
+
         </q-tab-panel>
 
         <!-- 组织 -->
@@ -119,12 +150,12 @@ const tabs = reactive({
 const basicInfo = reactive({
     loading:false,
     fields:{
-        account:{label:"msgAccount",value:""},
-        nick_name:{label:"msgNickName",value:""},
-        phone:{label:"msgPhone",value:""},
-        user_status:{label:"msgStatus",value:""},
-        updated_at:{label:"msgUpdateDt",value:""},
-        created_at:{label:"msgCreateDt",value:""},
+        account:{label:modelUser.account.label,value:""},
+        nick_name:{label:modelUser.nick_name.label,value:""},
+        phone:{label:modelUser.phone.label,value:""},
+        user_status:{label:modelUser.status.label,value:""},
+        updated_at:{label:modelBase.updated_at.label,value:""},
+        created_at:{label:modelBase.created_at.label,value:""},
     }
 })
 
@@ -166,8 +197,6 @@ const orgTbl = reactive({
     rows:[],
     pagination:null,
 })
-
-
 
 
 function btnClick(btnID){
@@ -257,6 +286,7 @@ function getDetail(user_uuid){
         }
     )
 }
+
 
 onMounted(()=>{
     getDetail(props.user_uuid)

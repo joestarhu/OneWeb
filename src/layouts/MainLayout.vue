@@ -48,9 +48,9 @@ const menuList = reactive({
     title:"",
     children:[
       {title:"msgMenuAccount",to:"/account",icon:"o_person"},
+      {title:"msgMenuOrg",to:"/org",icon:"o_corporate_fare"},
       {title:"msgMenuRole",to:"/role",icon:"o_contact_emergency"},
       {title:"msgMenuApp",to:"/app",icon:"o_widgets"},
-      {title:"msgMenuOrg",to:"/org",icon:"o_corporate_fare"},
     ]
   },
   // one:{

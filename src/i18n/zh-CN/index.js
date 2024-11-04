@@ -51,6 +51,7 @@ export default {
     msgOrgChoose: "请选择一个组织",
     msgOrgName: "组织名称",
     msgOrgOwnerName: "组织所有者",
+    msgOrgStatus: "组织状态",
     // P
     msgPassword: "密码",
     msgPhone: "手机号",

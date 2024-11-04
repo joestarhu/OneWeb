@@ -1,6 +1,9 @@
 <template>
+    <!-- 应用服务信息 -->
     <dmTbl v-bind="appSericesTbl" @query="getAppServicesList"></dmTbl>
 
+
+    <!-- 应用角色信息 -->
 
     <!-- <q-table dense flat v-bind="tbl"> 
         <template #header-cell-service_name="props">

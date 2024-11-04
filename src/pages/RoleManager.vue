@@ -33,7 +33,7 @@ const infoPnl = reactive({
 const tbl = reactive({
     dmQueryInput:{
         role_name:DMINPUT.text_query(modelRole.role_name),
-        role_status:DMINPUT.select_query(modelRole.status),
+        role_status:DMINPUT.select_query(modelRole.role_status),
     },
     dmHeaderBtn:[DMBTN.create],
     dmRowBtn:[DMBTN.info,DMBTN.edit, DMBTN.delete],
@@ -45,8 +45,8 @@ const tbl = reactive({
         DMTBL.col("updated_at", modelBase.updated_at.label),
         DMTBL.col("created_at", modelBase.created_at.label),
         {
-            ...DMTBL.col("role_status", modelUser.status.label, modelUser.status.options), style: row => {
-                let sts = modelUser.status
+            ...DMTBL.col("role_status", modelRole.role_status.label, modelRole.role_status.options), style: row => {
+                let sts = modelRole.role_status
                 for (let t in sts.options) {
                     if (sts.options[t].value == row.role_status) {
                         return sts.options[t].style

@@ -1,8 +1,34 @@
 <template>
 <q-page padding>
+    <!-- 组织列表 -->
     <dmManager title="msgPnlOrgList" :showDetail="infoPnl.show" @click="btnClick">
         <template #list>
-            <dmTbl v-bind="tbl" @btnClick="btnClick" @query="getList"></dmTbl>
+            <dmTbl v-bind="tbl" @btnClick="btnClick" @query="getList" />
+        </template>
+        <template #detail>
+            <q-tabs active-color="primary" class="text-grey" align="left" v-model="tabs.value">
+                <q-tab v-for="obj in tabs.lists" :key="obj" :name="obj.name" :label="$t(obj.name)" no-caps />
+            </q-tabs>
+
+            <q-tab-panels v-model="tabs.value">
+                <q-tab-panel name="msgPnlOrgBasicInfo">
+                    <OrgDetailBasic :org_uuid="infoPnl.org_uuid"></OrgDetailBasic>
+                </q-tab-panel>
+
+                <q-tab-panel name="msgPnlOrgUserInfo">
+                    组织用户信息
+                </q-tab-panel>
+
+                <q-tab-panel name="msgPnlOrgAppInfo">
+                    组织应用信息
+                </q-tab-panel>
+
+                <q-tab-panel name="msgPnlOrgSecurity">
+                    组织安全
+                </q-tab-panel>
+            </q-tab-panels>
+
+            <!-- <OrgDetail :org_uuid="infoPnl.org_uuid"></OrgDetail> -->
         </template>
     </dmManager>
 
@@ -32,9 +58,21 @@ import dmDialog from "src/components/dmDialog.vue";
 import dmForm from "src/components/dmForm.vue";
 import dmInput from "src/components/dmInput.vue";
 import dmManager from "src/components/dmManager.vue";
+import OrgDetail from "./OrgDetail.vue";
+import OrgDetailBasic from "./OrgDetailBasic.vue";
 
 const dm = new DMOBJ(useQuasar(),useRouter());
 const {t} = useI18n();
+
+const tabs = ref({
+    value:"msgPnlOrgBasicInfo",
+    lists:[
+        {name:"msgPnlOrgBasicInfo"},
+        {name:"msgPnlOrgUserInfo"},
+        {name:"msgPnlOrgAppInfo"},
+        {name:"msgPnlOrgSecurity"},
+    ]
+})
 
 const infoPnl = reactive({
     show:false,
@@ -56,27 +94,26 @@ const actPnl = reactive({
 const detailPnl = {
     org_name:DMINPUT.text_required({...modelOrg.org_name, rules:[val => val && val.toString().length > 0 || t("msgRequiredField")]}),
     user_uuid: DMINPUT.selectFilter({ ...modelOrg.owner_name, rules: [val => val && val.toString().length > 0 || t("msgRequiredField")] }),
-    org_remark: DMINPUT.text({ ...modelOrg.remark, type: "textarea" }),
-    org_status: DMINPUT.select(modelOrg.status),
+    org_remark: DMINPUT.text({ ...modelOrg.org_remark, type: "textarea" }),
+    org_status: DMINPUT.select(modelOrg.org_status),
 }
-
 
 const tbl = reactive({
     dmQueryInput:{
         org_name:DMINPUT.text_query(modelOrg.org_name),
-        status:DMINPUT.select_query(modelOrg.status),
+        status:DMINPUT.select_query(modelOrg.org_status),
     },
     dmHeaderBtn:[DMBTN.create],
     dmRowBtn:[DMBTN.info],
     columns:[
         DMTBL.col("org_name",modelOrg.org_name.label),
         DMTBL.col("owner_name", modelOrg.owner_name.label),
-        DMTBL.col("org_remark", modelOrg.remark.label),
+        DMTBL.col("org_remark", modelOrg.org_remark.label),
         DMTBL.col("updated_at", modelBase.updated_at.label),
         DMTBL.col("created_at", modelBase.created_at.label),
         {
-            ...DMTBL.col("org_status", modelUser.status.label, modelUser.status.options), style: row => {
-                let sts = modelUser.status
+            ...DMTBL.col("org_status", modelOrg.org_status.label, modelOrg.org_status.options), style: row => {
+                let sts = modelOrg.org_status
                 for (let t in sts.options) {
                     if (sts.options[t].value == row.org_status) {
                         return sts.options[t].style
@@ -121,6 +158,8 @@ function btnClick(btnID, props = null){
         //     break;
         case DMBTN.info.id:
             infoPnl.show =true;
+            infoPnl.org_uuid = props.row.org_uuid;
+            tabs.value.value = "msgPnlOrgBasicInfo";
             break;
         case DMBTN.confirm.id:
             let requestData = {
@@ -141,6 +180,7 @@ function btnClick(btnID, props = null){
             break;
         case DMBTN.back.id:
             infoPnl.show=false;
+            getList(tbl.pagination)
         default:break;
     }
 }
@@ -155,14 +195,14 @@ function getList(pagination){
     dm.dmTblGetList(pagination,tbl,"/org/list",data);
 }
 
-function getDetail(org_uuid){
-    dm.get("/org/detail",{org_uuid:org_uuid}, actPnl , (rsp)=>{
-        getOwnerOptionsByUUID(rsp.data["user_uuid"])
-        for(let kw in detailPnl){
-            detailPnl[kw].value = rsp.data[kw]
-        }  
-    })
-}
+// function getDetail(org_uuid){
+//     dm.get("/org/detail",{org_uuid:org_uuid}, actPnl , (rsp)=>{
+//         getOwnerOptionsByUUID(rsp.data["user_uuid"])
+//         for(let kw in detailPnl){
+//             detailPnl[kw].value = rsp.data[kw]
+//         }  
+//     })
+// }
 
 
 function filter(val,update,abort,tag){
