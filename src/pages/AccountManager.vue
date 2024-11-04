@@ -1,14 +1,30 @@
 <template>
 <q-page padding>
+    <!-- 列表界面 -->
     <dmManager title="msgPnlAccountList" :showDetail="infoPnl.show" @click="btnClick">
         <template #list>
             <dmTbl v-bind="tbl" @btnClick="btnClick" @query="getList"></dmTbl>
         </template>
         <template #detail>
-            <AccountDetail :user_uuid="infoPnl.user_uuid" @close="btnClick(DMBTN.back.id)"></AccountDetail>
+            <q-tabs active-color="primary" class="text-grey" align="left" v-model="tabs.value">
+                <q-tab v-for="obj in tabs.lists" :key="obj" :name="obj.name" :label="$t(obj.name)" no-caps />
+            </q-tabs>
+
+            <q-tab-panels v-model="tabs.value">
+                <!-- 基础信息 -->
+                <q-tab-panel name="msgPnlAccountBasicInfo">
+                    <AccountDetailBasic :user_uuid="infoPnl.user_uuid" @close="btnClick(DMBTN.back.id)"></AccountDetailBasic>
+                </q-tab-panel>
+
+                <!-- 组织信息 -->
+                <q-tab-panel name="msgPnlAccountOrg">
+                    T.B.D
+                </q-tab-panel>
+            </q-tab-panels>
+
         </template>
     </dmManager>
-    
+
     <!-- 弹窗界面(新增) -->
     <q-dialog persistent v-model="actPnl.show">
         <dmDialog :title="actPnl.res.title">
@@ -24,7 +40,7 @@
 import { useQuasar } from "quasar";
 import { useRouter } from "vue-router";
 import { useI18n } from "vue-i18n";
-import { onMounted, reactive } from "vue";
+import { onMounted, reactive,ref } from "vue";
 import { DMOBJ,DMTBL,DMINPUT,DMBTN } from "src/base/dm";
 import { modelBase,modelUser } from "src/base/model";
 import dmManager from "src/components/dmManager.vue";
@@ -33,6 +49,7 @@ import dmDialog from "src/components/dmDialog.vue";
 import dmForm from "src/components/dmForm.vue";
 import dmInput from "src/components/dmInput.vue";
 import AccountDetail from "./AccountDetail.vue";
+import AccountDetailBasic from "./AccountDetailBasic.vue";
 
 const dm = new DMOBJ(useQuasar(),useRouter());
 const {t} = useI18n();
@@ -68,6 +85,15 @@ const tbl = reactive({
     rows:[],
     pagination:null,
 })
+
+const tabs = ref({
+    value:"msgPnlAccountBasicInfo",
+    lists:[
+        {name:"msgPnlAccountBasicInfo"},
+        {name:"msgPnlAccountOrg"},
+    ]
+})
+
 
 const actRes = {
     create: {title:"msgPnlAccountCreate", url:"/account/create"},
@@ -113,7 +139,8 @@ function getList(pagination){
 
 function accountShowDetail(user_uuid){
     infoPnl.show=true
-    infoPnl.user_uuid = user_uuid
+    infoPnl.user_uuid=user_uuid
+    tabs.value.value = "msgPnlAccountBasicInfo"
 }
 
 function btnClick(btnID, props=null){
@@ -128,11 +155,17 @@ function btnClick(btnID, props=null){
             accountShowDetail(props.row.user_uuid)
             break;
         case DMBTN.confirm.id:
-            let requestData = {
-                account:actComponent.account.value,
-                phone:actComponent.phone.value,
-                nick_name:actComponent.nick_name.value,
-                user_status:actComponent.user_status.value
+            let requestData = null;
+            switch(actPnl.res.title){
+                case actRes.create.title:
+                    requestData = {
+                        account:actComponent.account.value,
+                        phone:actComponent.phone.value,
+                        nick_name:actComponent.nick_name.value,
+                        user_status:actComponent.user_status.value
+                    }
+                    break;
+                default:break;
             }
 
             dm.post(actPnl.res.url, requestData, actPnl,
