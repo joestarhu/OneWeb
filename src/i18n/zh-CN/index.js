@@ -87,10 +87,12 @@ export default {
     msgPnlAccountCreate: "新增账号",
     msgPnlAccountEdit: "编辑账号",
     msgPnlAccountDelete: "删除账号",
+    msgPnlAccountDeleteCaption: "账号被删除后,数据不可恢复",
     msgPnlAccountSecurity: "账号安全",
     msgPnlAccountList: "账号列表",
     msgPnlAccountBasicInfo: "账号信息",
     msgPnlAccountOrg: "组织信息",
+
 
     msgPnlRoleList: "角色列表",
 
@@ -99,6 +101,10 @@ export default {
     msgPnlOrgDelete: "删除组织",
     msgPnlOrgInfo: "组织详情",
     msgPnlOrgList: "组织列表",
+    msgPnlOrgBasicInfo: "组织基础信息",
+    msgPnlOrgUserInfo: "组织用户信息",
+    msgPnlOrgAppInfo: "组织应用信息",
+    msgPnlOrgSecurity: "组织安全",
 
     msgPnlAppInfo: "应用详情",
     msgPnlAppList: "应用列表",

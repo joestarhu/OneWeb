@@ -87,10 +87,11 @@ export default {
   msgPnlAccountCreate: "Create Account",
   msgPnlAccountEdit: "Edit Account",
   msgPnlAccountDelete: "Delete Account",
+  msgPnlAccountDeleteCaption: "After the account is deleted, the data cannot be recovered",
   msgPnlAccountSecurity: "Account Security",
   msgPnlAccountList: "Account List",
-  msgPnlAccountBasicInfo: "Account Information",
-  msgPnlAccountOrg: "Organization Information",
+  msgPnlAccountBasicInfo: "Account Info",
+  msgPnlAccountOrg: "Organization Info",
 
   msgPnlRoleList: "Role List",
 
@@ -99,6 +100,10 @@ export default {
   msgPnlOrgDelete: "Delete Organization",
   msgPnlOrgInfo: "Organization Info",
   msgPnlOrgList: "Organization List",
+  msgPnlOrgBasicInfo: "Organization Info",
+  msgPnlOrgUserInfo: "Organization User Info",
+  msgPnlOrgAppInfo: "Organization App Info",
+  msgPnlOrgSecurity: "Organization Security",
 
   msgPnlAppInfo: "Application Info",
   msgPnlAppList: "Application List",
