@@ -1,5 +1,14 @@
 <template>
-<dmTbl v-bind="tbl" @query="getList"></dmTbl>
+<dmTbl v-bind="tbl" @query="getList">
+    <template #body-cell-org_name="props">
+        <q-td :props="props">
+            <span class="text-bold">{{ props.row.org_name }}</span>
+            <br>
+            <q-badge v-if="props.row.owner_flag">{{$t("msgOrgOwnerName")}}</q-badge>
+        </q-td>
+    </template>
+
+</dmTbl>
 </template>
 
 <script setup lang="js">

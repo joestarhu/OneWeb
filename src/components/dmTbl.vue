@@ -44,7 +44,7 @@
         </div>
       </template>
 
-        <!-- 行操作栏 -->
+        <!-- 特殊行操作栏:btns -->
         <template #body-cell-btns="props">
             <q-td :props="props" class="q-gutter-xs">
                 <q-btn v-for="obj in dmRowBtn" :key="obj.id" :color="obj.color" :icon="obj.icon"
@@ -55,6 +55,16 @@
                 </q-btn>
             </q-td>
         </template>
+
+        <!-- q-table自身的slot -->
+        <template #body-cell="props">
+            <slot :name="`body-cell-${props.col.name}`" v-bind="props">
+                <q-td :props="props">
+                    <span >{{ props.value }}</span>
+                </q-td>
+            </slot>
+        </template>
+
     </q-table>
 </template>
 
