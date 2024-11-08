@@ -1,6 +1,6 @@
 <template>
     <q-table v-bind="qProps" :rows-per-page-options="rows_per_page_options" :pagination="pagination"
-        v-model:pagination="pagination" @request="onRequest" flat style="border-radius: 10px;">
+        v-model:pagination="pagination" @request="onRequest" flat style="border-radius: 10px;" :rows-per-page-label="$t('msgRecordPerPage')">
         <template v-if="tblHeaderFlag" v-slot:top>
             <div class="col row q-col-gutter-xs">
                 <dmInput v-for="obj in dmQueryInput" :key="obj" :qProps="obj.qProps" :dmType="obj.dmType" :dmAppend="obj.dmAppend"

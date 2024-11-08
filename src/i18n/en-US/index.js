@@ -64,6 +64,7 @@ export default {
   msgRequired: "Required",
   msgRequiredField: "Required Field",
   msgResetPassword: "Reset Password",
+  msgRecordPerPage: "Records per page",
   // S
   msgStatus: "Status",
   msgSuccess: "Succeed",

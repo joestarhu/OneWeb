@@ -63,6 +63,7 @@ export default {
     msgRequired: "必需",
     msgRequiredField: "必填字段",
     msgResetPassword: "重置密码",
+    msgRecordPerPage: "每页页数",
     // S
     msgStatus: "状态",
     msgSuccess: "成功",
